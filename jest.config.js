@@ -1,6 +1,5 @@
 module.exports = {
-  testEnvironment: 'jsdom',
-  roots: ['<rootDir>/src'],
+  testEnvironment: 'jest-environment-jsdom',
   transform: {
     '^.+\\.(ts|tsx)$': 'ts-jest',
   },
@@ -12,10 +11,10 @@ module.exports = {
   },
   // see https://stackoverflow.com/questions/50863312/jest-gives-cannot-find-module-when-importing-components-with-absolute-paths
   moduleDirectories: ['node_modules', '<rootDir>'],
-  testPathIgnorePatterns: ['/node_modules/', '<rootDir>/src/__tests__/utils'],
-  coveragePathIgnorePatterns: ['<rootDir>/src/mocks/', '<rootDir>/src/__tests__/utils'],
+  testPathIgnorePatterns: ['/node_modules/', ],
   moduleNameMapper: {
     '^lodash-es$': 'lodash',
     '@/(.*)$': '<rootDir>/src/$1',
   },
+  setupFilesAfterEnv: ['<rootDir>/jest-setup.ts']
 };

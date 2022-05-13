@@ -1,12 +1,12 @@
+const path = require('path');
+
 module.exports = {
-  "stories": [
-    "../src/**/*stories.@(js|jsx|ts|tsx)"
-  ],
-  "addons": [
-    "@storybook/addon-links",
-    "@storybook/addon-essentials",
-    "@storybook/addon-interactions",
-    "@storybook/addon-a11y",
+  stories: ['../src/**/*.stories.tsx'],
+  addons: [
+    '@storybook/addon-links',
+    '@storybook/addon-essentials',
+    '@storybook/addon-interactions',
+    '@storybook/addon-a11y',
     {
       name: '@storybook/addon-postcss',
       options: {
@@ -16,5 +16,17 @@ module.exports = {
       },
     },
   ],
-  "framework": "@storybook/react"
-}
+  webpackFinal: async (config) => {
+    return {
+      ...config,
+      resolve: {
+        ...config.resolve,
+        alias: {
+          ...config.resolve.alias,
+          '@': path.resolve(__dirname, '../src'),
+        },
+      },
+    };
+  },
+  framework: '@storybook/react',
+};
