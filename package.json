@@ -14,7 +14,7 @@
     "test:watch": "jest --watch",
     "lint": "next lint",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook -o build"
   },
   "dependencies": {
     "@storybook/addon-a11y": "^6.4.22",
