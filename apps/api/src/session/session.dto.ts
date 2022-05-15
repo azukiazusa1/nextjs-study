@@ -1,7 +1,18 @@
+import { IsNotEmpty } from 'class-validator';
 /**
  * セッションの最大参加人数
  */
 export const MAX_PARTICIPANTS = 4;
+
+/**
+ * 作業時間（ミリ秒）
+ */
+export const WORK_TIME = 25 * 60 * 1000;
+
+/**
+ * 休憩時間（ミリ秒）
+ */
+export const REST_TIME = 5 * 60 * 1000;
 
 /**
  * サーバーから送信されるイベント名
@@ -20,7 +31,7 @@ export const RES_EVENTS = {
    */
   QUITED: 'quited',
   /**
-   * 部屋情報の取得
+   * 参加者情報の取得
    */
   ROOM_INFO: 'roomInfo',
   /**
@@ -31,7 +42,7 @@ export const RES_EVENTS = {
    * タイマーが完了したとき
    */
   COMPLETE: 'complete',
-} as const
+} as const;
 
 /**
  * クライアントから送信するイベント名
@@ -46,29 +57,10 @@ export const REQ_EVENTS = {
    */
   QUIT: 'quit',
   /**
-   * 部屋情報の取得
+   * 部屋情報の
    */
   GET_ROOM_INFO: 'getRoomInfo',
-} as const
-
-export interface MessageEventDto extends MessageDto {
-  socketId?: string;
-  roomId: string;
-  avatar: string;
-}
-
-export interface MessageDto {
-  order: number;
-  username: string;
-  content: string;
-  createdAt: Date;
-}
-
-export interface ChatDto extends MessageDto {
-  socketId?: string;
-  roomId: string;
-  avatar: string;
-}
+} as const;
 
 export interface Participant {
   roomId: string;
@@ -76,6 +68,22 @@ export interface Participant {
   username: string;
   avatar: string;
   score: number;
+}
+
+export class RoomData {
+  createdBy: string;
+  createdDate: Date;
+  timer: NodeJS.Timeout | null;
+  participants: Participant[];
+  isRestTime: boolean;
+
+  constructor(createdBy: string, timer: NodeJS.Timeout) {
+    this.createdBy = createdBy;
+    this.createdDate = new Date();
+    this.timer = timer;
+    this.participants = [];
+    this.isRestTime = false;
+  }
 }
 
 export interface RoomInfo {
@@ -89,20 +97,11 @@ export interface RoomInfo {
   isRestTime: boolean;
 }
 
-export interface JoinRoomDto {
+export class JoinRoomDto {
+  @IsNotEmpty()
   username: string;
+  @IsNotEmpty()
   avatar: string;
-  score: number;
-}
-
-
-export interface CompleteResult {
-  /**
-   * 次のセッションが休憩時間かどうか
-   */
-  isRestTime: boolean;
-  /**
-   * セッションの完了により取得したスコア
-   */
+  @IsNotEmpty()
   score: number;
 }

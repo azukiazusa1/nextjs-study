@@ -11,7 +11,6 @@ const parameters = {
       date: /Date$/,
     },
   },
-} as any
-
+} as any;
 
 setGlobalConfig(parameters);
