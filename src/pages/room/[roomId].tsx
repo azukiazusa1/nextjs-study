@@ -59,6 +59,12 @@ const Home: NextPage = () => {
       play();
     });
 
+    router.beforePopState(() => {
+      // ルートに戻った時、サーバーに退出要求を送信
+      socket.emit(REQ_EVENTS.QUIT, router.query.roomId as string);
+      return true;
+    });
+
     return () => {
       socket.off(RES_EVENTS.ROOM_INFO);
       socket.off(RES_EVENTS.COMPLETE);
