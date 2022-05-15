@@ -18,7 +18,7 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: '>=13.7'
-      - name: yarn install
-        run: yarn install
+      - name: npm install
+        run: npm install
       - name: Build
-        run: BASE_URL=http://localhost:3000 yarn build
+        run: BASE_URL=http://localhost:3000 npm run build
