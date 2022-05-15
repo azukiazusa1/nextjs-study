@@ -1,4 +1,4 @@
-import { renderHook } from '@testing-library/react';
+import { renderHook, waitFor } from '@testing-library/react';
 import { createServer } from 'http';
 import React from 'react';
 import { act } from 'react-dom/test-utils';
@@ -19,8 +19,9 @@ describe('hooks/useParticipants', () => {
   beforeAll((done) => {
     const httpServer = createServer();
     io = new Server(httpServer);
-    httpServer.listen(3333, () => {
-      clientSocket = Client(`http://localhost:3333`);
+    httpServer.listen(() => {
+      const port = (httpServer.address() as any).port;
+      clientSocket = Client(`http://localhost:${port}`);
       io.on('connection', (socket) => {
         serverSocket = socket;
         done();
@@ -61,10 +62,11 @@ describe('hooks/useParticipants', () => {
         isRestTime: false,
         participants,
       });
-      await new Promise((resolve) => setTimeout(resolve, 0));
     });
 
-    expect(result.current.participants).toEqual(participants);
+    await waitFor(() => {
+      expect(result.current.participants).toEqual(participants);
+    });
   });
 
   test('セッションが完了した時にスコアが加算されること', async () => {
@@ -74,35 +76,37 @@ describe('hooks/useParticipants', () => {
         isRestTime: false,
         participants,
       });
-      await new Promise((resolve) => setTimeout(resolve, 0));
     });
 
-    expect(result.current.participants).toEqual(participants);
+    await waitFor(() => {
+      expect(result.current.participants).toEqual(participants);
+    });
 
     await act(async () => {
       serverSocket.emit(RES_EVENTS.COMPLETE, {
         score: 10,
         isRestTime: false,
       });
-      await new Promise((resolve) => setTimeout(resolve, 0));
     });
 
-    expect(result.current.participants).toEqual([
-      {
-        roomId: 'roomId',
-        id: '1',
-        username: 'test1',
-        avatar: '',
-        score: 10,
-      },
-      {
-        roomId: 'roomId',
-        id: '2',
-        username: 'test2',
-        avatar: '',
-        score: 15,
-      },
-    ]);
+    await waitFor(() => {
+      expect(result.current.participants).toEqual([
+        {
+          roomId: 'roomId',
+          id: '1',
+          username: 'test1',
+          avatar: '',
+          score: 10,
+        },
+        {
+          roomId: 'roomId',
+          id: '2',
+          username: 'test2',
+          avatar: '',
+          score: 15,
+        },
+      ]);
+    });
   });
 
   test('セッションが完了した時、スコアが0以下の場合スコアが加算されないこと', async () => {
@@ -113,20 +117,22 @@ describe('hooks/useParticipants', () => {
         isRestTime: false,
         participants,
       });
-      await new Promise((resolve) => setTimeout(resolve, 0));
     });
 
-    expect(result.current.participants).toEqual(participants);
+    await waitFor(() => {
+      expect(result.current.participants).toEqual(participants);
+    });
 
     await act(async () => {
       serverSocket.emit(RES_EVENTS.COMPLETE, {
         score: -10,
         isRestTime: false,
       });
-      await new Promise((resolve) => setTimeout(resolve, 0));
     });
 
-    expect(result.current.participants).toEqual(participants);
+    await waitFor(() => {
+      expect(result.current.participants).toEqual(participants);
+    });
   });
 
   test('参加者が追加されること', async () => {
@@ -137,11 +143,11 @@ describe('hooks/useParticipants', () => {
         isRestTime: false,
         participants,
       });
-      await new Promise((resolve) => setTimeout(resolve, 0));
     });
 
-    expect(result.current.participants).toEqual(participants);
-
+    await waitFor(() => {
+      expect(result.current.participants).toEqual(participants);
+    });
     await act(async () => {
       serverSocket.emit(RES_EVENTS.PARTICIPATED, {
         participant: {
@@ -152,19 +158,20 @@ describe('hooks/useParticipants', () => {
           score: 0,
         },
       });
-      await new Promise((resolve) => setTimeout(resolve, 0));
     });
 
-    expect(result.current.participants).toEqual([
-      ...participants,
-      {
-        roomId: 'roomId',
-        id: '3',
-        username: 'test3',
-        avatar: '',
-        score: 0,
-      },
-    ]);
+    await waitFor(() => {
+      expect(result.current.participants).toEqual([
+        ...participants,
+        {
+          roomId: 'roomId',
+          id: '3',
+          username: 'test3',
+          avatar: '',
+          score: 0,
+        },
+      ]);
+    });
   });
 
   test('参加者が退出されること', async () => {
@@ -175,26 +182,26 @@ describe('hooks/useParticipants', () => {
         isRestTime: false,
         participants,
       });
-      await new Promise((resolve) => setTimeout(resolve, 0));
     });
-
-    expect(result.current.participants).toEqual(participants);
-
+    await waitFor(() => {
+      expect(result.current.participants).toEqual(participants);
+    });
     await act(async () => {
       serverSocket.emit(RES_EVENTS.QUITED, {
         id: '2',
       });
-      await new Promise((resolve) => setTimeout(resolve, 0));
     });
 
-    expect(result.current.participants).toEqual([
-      {
-        roomId: 'roomId',
-        id: '1',
-        username: 'test1',
-        avatar: '',
-        score: 0,
-      },
-    ]);
+    await waitFor(() => {
+      expect(result.current.participants).toEqual([
+        {
+          roomId: 'roomId',
+          id: '1',
+          username: 'test1',
+          avatar: '',
+          score: 0,
+        },
+      ]);
+    });
   });
 });

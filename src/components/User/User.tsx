@@ -16,7 +16,9 @@ const User: React.FC<Props> = ({ className = '', username, image, status, score 
       <Avatar status={status} src={image} alt={username} />
       <div className="flex flex-col ml-4 space-y-2">
         <div className="truncate">{username}</div>
-        <div>🍅 × {score}</div>
+        <div className="countdown">
+          🍅 ×<span style={{ '--value': score } as React.CSSProperties}>{score}</span>
+        </div>
       </div>
     </div>
   );
