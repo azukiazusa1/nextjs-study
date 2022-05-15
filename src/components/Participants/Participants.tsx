@@ -20,7 +20,7 @@ const Participants: React.FC = () => {
         <User
           key={participant.id}
           username={participant.username}
-          image={participant.avatar}
+          image={`/images/${participant.avatar}.png`}
           status={'online'}
           score={participant.score}
         />
