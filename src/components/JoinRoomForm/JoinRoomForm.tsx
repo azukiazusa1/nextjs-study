@@ -60,7 +60,7 @@ const JoinRoomForm = () => {
     return () => {
       socket.off(RES_EVENTS.JOINED);
     };
-  }, [socket]);
+  }, [router, socket]);
 
   return (
     <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
