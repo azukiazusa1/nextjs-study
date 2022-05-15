@@ -13,12 +13,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: change dir
-        run: cd apps/web
       - name: install packages
-        run: npm install --legacy-peer-deps
+        run: cd apps/web && npm install --legacy-peer-deps
       - name: build storybook
-        run: npm run build-storybook
+        run: cd apps/web && npm run build-storybook
       - name: deploy storybook
         uses: JamesIves/github-pages-deploy-action@4.1.0
         with:
