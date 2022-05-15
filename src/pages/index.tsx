@@ -1,7 +1,37 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
+import { useContext, useEffect, useState } from 'react';
+
+import CountdownTimer from '@/components/CountdownTimer/CountdownTimer';
+import { SocketContext } from '@/context/socket';
+import { RES_EVENTS } from '@/model/session';
 
 const Home: NextPage = () => {
+  const socket = useContext(SocketContext);
+  const router = useRouter();
+  const [text, setText] = useState('');
+
+  useEffect(() => {
+    socket.on(RES_EVENTS.JOINED, ({ roomId }: any) => {
+      router.push(`/room/${roomId}`);
+    });
+
+    return () => {
+      socket.off(RES_EVENTS.JOINED);
+    };
+  }, [socket]);
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    socket.emit('joinRoom', {
+      username: text,
+      avatar: 'https://cdn-icons-png.flaticon.com/512/147/147144.png',
+      score: 4,
+    });
+    setText('');
+  };
+
   return (
     <div>
       <Head>
@@ -14,6 +44,11 @@ const Home: NextPage = () => {
         <h1>
           Welcome to <a href="https://nextjs.org">Next.js!</a>
         </h1>
+        <form onSubmit={handleSubmit}>
+          <input type="text" value={text} onChange={(e) => setText(e.target.value)} />
+          <button type="submit">Join</button>
+        </form>
+        <CountdownTimer />
       </main>
     </div>
   );

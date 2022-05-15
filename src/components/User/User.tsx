@@ -7,16 +7,16 @@ type Props = {
   username: string;
   image: string;
   status: 'online' | 'offline' | '';
-  quantity: number;
+  score: number;
 };
 
-const User: React.FC<Props> = ({ className, username, image, status, quantity }: Props) => {
+const User: React.FC<Props> = ({ className = '', username, image, status, score }: Props) => {
   return (
-    <div className={`flex ${className}`}>
+    <div className={`flex max-w-60 ${className}`}>
       <Avatar status={status} src={image} alt={username} />
-      <div className="flex flex-col ml-4">
-        <div>{username}</div>
-        <div>🍅 × {quantity}</div>
+      <div className="flex flex-col ml-4 space-y-2">
+        <div className="truncate">{username}</div>
+        <div>🍅 × {score}</div>
       </div>
     </div>
   );

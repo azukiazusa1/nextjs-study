@@ -1,4 +1,7 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+
+import { SocketContext } from "@/context/socket";
+import { RES_EVENTS } from "@/model/session";
 
 type UseCountdownReturn = {
   /**
@@ -14,10 +17,6 @@ type UseCountdownReturn = {
    */
   milliseconds: number;
   /**
-   * カウントダウンが終了したかどうか
-   */
-  end: boolean;
-  /**
    * 進捗状況
    */
   remainngPercentage: number;
@@ -25,51 +24,38 @@ type UseCountdownReturn = {
 
 /**
  * カウントダウンタイマーを使用する
- * 
- * @param time カウントする時間（ミリ秒）
- * @returns [minutes, seconds, milliseconds] のタプル
  */
-type UseCountdown = (time: number) => UseCountdownReturn;
+type UseCountdown = () => UseCountdownReturn;
 
 const toMinutes = (time: number): number => Math.floor(time / 60000);
 const toSeconds = (time: number): number => Math.floor((time % 60000) / 1000);
 
-const useCountdown: UseCountdown = (
-  time: number,
-) => {
-  const [startTime] = useState(Date.now());
-  const [milliseconds, setMilliseconds] = useState(time);
+const useCountdown: UseCountdown = () => {
+  const socket = useContext(SocketContext);
+  const [milliseconds, setMilliseconds] = useState(25 * 60 * 1000);
   const [minutes, setMinutes] = useState(toMinutes(milliseconds));
   const [seconds, setSeconds] = useState(toSeconds(milliseconds));
   const [remainngPercentage, setRemainngPercentage] = useState(100);
-  const [end, setEnd] = useState(false);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      const now = Date.now();
-      const diff = now - startTime;
-      const newMilliseconds = time - diff;
-      const minutes = Math.max(toMinutes(newMilliseconds), 0);
-      const seconds = Math.max(toSeconds(newMilliseconds), 0);
-      setMinutes(minutes);
-      setSeconds(seconds);
-      setMilliseconds(newMilliseconds);
-      setRemainngPercentage(Math.max(0, Math.min(100, (time - diff) / time * 100)));
-      if (newMilliseconds <= 0) {
-        setEnd(true);
-        clearInterval(interval);
-      }
-    }, 1000);
+    socket.on(RES_EVENTS.TICK, (palyload) => {
+      setMilliseconds(palyload.time);
+      setMinutes(toMinutes(palyload.time));
+      setSeconds(toSeconds(palyload.time));
+      setRemainngPercentage(Math.round(palyload.remainngPercentage));
+    });
 
-    return () => clearInterval(interval);
-  }, [startTime, time]);
+    return () => {
+      socket.off(RES_EVENTS.TICK);
+    }
+
+  }, [socket]);
 
   return {
     minutes,
     seconds,
     milliseconds,
     remainngPercentage,
-    end,
   };
 }
 

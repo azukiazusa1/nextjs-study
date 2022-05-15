@@ -20,7 +20,7 @@ type Props = {
 const Avatar: React.FC<Props> = ({ className, src, alt, status = '' }) => {
   return (
     <div className={`avatar ${status} ${className}`}>
-      <div className="w-12 rounded-full">
+      <div className="w-12 h-12 rounded-full">
         <img src={src} alt={alt} width="48px" height="48px" />
       </div>
     </div>

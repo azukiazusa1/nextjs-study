@@ -15,7 +15,7 @@ Default.args = {
   image:
     'https://images.unsplash.com/photo-1584361853901-dd1904bb7987?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1974&q=80',
   status: 'online',
-  quantity: 12,
+  score: 12,
 };
 
 export const isOffline = Template.bind({});
@@ -24,5 +24,5 @@ isOffline.args = {
   image:
     'https://images.unsplash.com/photo-1584361853901-dd1904bb7987?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1974&q=80',
   status: 'offline',
-  quantity: 12,
+  score: 12,
 };

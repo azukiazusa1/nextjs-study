@@ -1,0 +1,167 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`components/Button Renders Default story 1`] = `
+<body>
+  <div>
+    <button
+      class="btn btn-primary btn-md"
+      type="button"
+    >
+      ボタン
+    </button>
+  </div>
+</body>
+`;
+
+exports[`components/Button Renders color story 1`] = `
+<body>
+  <div>
+    <div
+      class="grid grid-cols-6 gap-4"
+    >
+      <button
+        class="btn btn-primary btn-md"
+        type="button"
+      >
+        primary
+      </button>
+      <button
+        class="btn btn-secondary btn-md"
+        type="button"
+      >
+        secondary
+      </button>
+      <button
+        class="btn btn-success btn-md"
+        type="button"
+      >
+        success
+      </button>
+      <button
+        class="btn btn-warning btn-md"
+        type="button"
+      >
+        warning
+      </button>
+      <button
+        class="btn btn-info btn-md"
+        type="button"
+      >
+        info
+      </button>
+      <button
+        class="btn btn-error btn-md"
+        type="button"
+      >
+        error
+      </button>
+      <button
+        class="btn btn-ghost btn-md"
+        type="button"
+      >
+        ghost
+      </button>
+    </div>
+  </div>
+</body>
+`;
+
+exports[`components/Button Renders isActive story 1`] = `
+<body>
+  <div>
+    <button
+      class="btn btn-primary btn-md active"
+      type="button"
+    >
+      ボタン
+    </button>
+  </div>
+</body>
+`;
+
+exports[`components/Button Renders isDisabled story 1`] = `
+<body>
+  <div>
+    <button
+      class="btn btn-primary btn-md disabled"
+      type="button"
+    >
+      ボタン
+    </button>
+  </div>
+</body>
+`;
+
+exports[`components/Button Renders isLink story 1`] = `
+<body>
+  <div>
+    <button
+      class="btn btn-primary btn-md btn-link"
+      type="button"
+    >
+      ボタン
+    </button>
+  </div>
+</body>
+`;
+
+exports[`components/Button Renders isLoading story 1`] = `
+<body>
+  <div>
+    <button
+      class="btn btn-primary btn-md loading"
+      type="button"
+    >
+      ボタン
+    </button>
+  </div>
+</body>
+`;
+
+exports[`components/Button Renders isOutline story 1`] = `
+<body>
+  <div>
+    <button
+      class="btn btn-primary btn-md btn-outline"
+      type="button"
+    >
+      ボタン
+    </button>
+  </div>
+</body>
+`;
+
+exports[`components/Button Renders size story 1`] = `
+<body>
+  <div>
+    <div
+      class="grid grid-cols-6 gap-4"
+    >
+      <button
+        class="btn btn-primary btn-xs"
+        type="button"
+      >
+        xs
+      </button>
+      <button
+        class="btn btn-primary btn-sm"
+        type="button"
+      >
+        sm
+      </button>
+      <button
+        class="btn btn-primary btn-md"
+        type="button"
+      >
+        md
+      </button>
+      <button
+        class="btn btn-primary btn-lg"
+        type="button"
+      >
+        lg
+      </button>
+    </div>
+  </div>
+</body>
+`;

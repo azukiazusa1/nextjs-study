@@ -4,12 +4,8 @@ import RadialProgress from '@/components/RadialProgress/RadialProgress';
 import Timer from '@/components/Timer/Timer';
 import useCountdown from '@/hooks/useCountdown';
 
-type Props = {
-  time: number;
-};
-
-const CountdownTimer: React.FC<Props> = ({ time }) => {
-  const { minutes, seconds, remainngPercentage } = useCountdown(time);
+const CountdownTimer: React.FC = () => {
+  const { minutes, seconds, remainngPercentage } = useCountdown();
 
   return (
     <RadialProgress progress={remainngPercentage}>

@@ -7,7 +7,7 @@ exports[`components/Avatar Renders Default story 1`] = `
       class="avatar  undefined"
     >
       <div
-        class="w-12 rounded-full"
+        class="w-12 h-12 rounded-full"
       >
         <img
           alt="user"

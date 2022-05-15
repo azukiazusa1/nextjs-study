@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`components/SkeltonUser Renders Default story 1`] = `
+<body>
+  <div>
+    <div
+      class="animate-pulse flex max-w-60"
+    >
+      <div
+        class="rounded-full bg-slate-700 h-12 w-12"
+      />
+      <div
+        class="flex-1 space-y-4 mt-2 ml-4"
+      >
+        <div
+          class="h-2 bg-slate-700 rounded"
+        />
+        <div
+          class="h-2 bg-slate-700 rounded"
+        />
+      </div>
+    </div>
+  </div>
+</body>
+`;
