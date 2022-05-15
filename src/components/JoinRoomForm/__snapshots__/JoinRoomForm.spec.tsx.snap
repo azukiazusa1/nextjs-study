@@ -1,0 +1,201 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`hooks/useCountdown should render correctly 1`] = `
+<div>
+  <div
+    class="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100"
+  >
+    <div
+      class="card-body"
+    >
+      <form>
+        <div
+          class="form-control"
+        >
+          <label
+            class="label"
+            for="username"
+          >
+            <span
+              class="label-text"
+            >
+              名前
+            </span>
+          </label>
+          <input
+            class="input input-bordered "
+            id="username"
+            type="text"
+            value=""
+          />
+        </div>
+        <div
+          class="grid mt-2 grid-cols-4 gap-4 place-items-center"
+        >
+          <button
+            class="ring w-12 h-12 rounded-full ring-main"
+            type="button"
+          >
+            <div
+              class="avatar  undefined"
+            >
+              <div
+                class="w-12 h-12 rounded-full"
+              >
+                <img
+                  alt="髭をはやしてオレンジ色の服を着ている男性"
+                  height="48px"
+                  src="/images/1.png"
+                  width="48px"
+                />
+              </div>
+            </div>
+          </button>
+          <button
+            class="false"
+            type="button"
+          >
+            <div
+              class="avatar  undefined"
+            >
+              <div
+                class="w-12 h-12 rounded-full"
+              >
+                <img
+                  alt="ショートヘアで赤い服を着ている女性"
+                  height="48px"
+                  src="/images/2.png"
+                  width="48px"
+                />
+              </div>
+            </div>
+          </button>
+          <button
+            class="false"
+            type="button"
+          >
+            <div
+              class="avatar  undefined"
+            >
+              <div
+                class="w-12 h-12 rounded-full"
+              >
+                <img
+                  alt="ちょび髭を生やした赤と黒のチェックシャツの男性"
+                  height="48px"
+                  src="/images/3.png"
+                  width="48px"
+                />
+              </div>
+            </div>
+          </button>
+          <button
+            class="false"
+            type="button"
+          >
+            <div
+              class="avatar  undefined"
+            >
+              <div
+                class="w-12 h-12 rounded-full"
+              >
+                <img
+                  alt="ミディアムヘアで緑の服を着ている女性"
+                  height="48px"
+                  src="/images/4.png"
+                  width="48px"
+                />
+              </div>
+            </div>
+          </button>
+          <button
+            class="false"
+            type="button"
+          >
+            <div
+              class="avatar  undefined"
+            >
+              <div
+                class="w-12 h-12 rounded-full"
+              >
+                <img
+                  alt="フラットデザインのキツネ"
+                  height="48px"
+                  src="/images/5.png"
+                  width="48px"
+                />
+              </div>
+            </div>
+          </button>
+          <button
+            class="false"
+            type="button"
+          >
+            <div
+              class="avatar  undefined"
+            >
+              <div
+                class="w-12 h-12 rounded-full"
+              >
+                <img
+                  alt="フラットデザインのペンギン"
+                  height="48px"
+                  src="/images/6.png"
+                  width="48px"
+                />
+              </div>
+            </div>
+          </button>
+          <button
+            class="false"
+            type="button"
+          >
+            <div
+              class="avatar  undefined"
+            >
+              <div
+                class="w-12 h-12 rounded-full"
+              >
+                <img
+                  alt="フラットデザインのアザラシ"
+                  height="48px"
+                  src="/images/7.png"
+                  width="48px"
+                />
+              </div>
+            </div>
+          </button>
+          <button
+            class="false"
+            type="button"
+          >
+            <div
+              class="avatar  undefined"
+            >
+              <div
+                class="w-12 h-12 rounded-full"
+              >
+                <img
+                  alt="フラットデザインのタコ"
+                  height="48px"
+                  src="/images/8.png"
+                  width="48px"
+                />
+              </div>
+            </div>
+          </button>
+        </div>
+        <div
+          class="form-control mt-6"
+        >
+          <button
+            class="btn btn-primary"
+          >
+            JOIN👏
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+`;

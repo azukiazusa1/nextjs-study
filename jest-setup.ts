@@ -1,4 +1,5 @@
-import '@testing-library/jest-dom'
+import '@testing-library/jest-dom';
+import 'jest-localstorage-mock';
 
 import { setGlobalConfig } from '@storybook/testing-react';
 
