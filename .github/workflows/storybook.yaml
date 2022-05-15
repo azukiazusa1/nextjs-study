@@ -5,12 +5,16 @@ on:
     branches:
       - main
       - develop
+    paths:
+      - "apps/web/**"
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: change dir
+        run: cd apps/web
       - name: install packages
         run: npm install
       - name: build storybook
@@ -19,4 +23,4 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@4.1.0
         with:
           branch: gh-pages
-          folder: build
+          folder: apps/web/build

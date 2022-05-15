@@ -1,7 +1,7 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from 'react';
 
-import { SocketContext } from "@/context/socket";
-import { RES_EVENTS } from "@/model/session";
+import { SocketContext } from '@/context/socket';
+import { RES_EVENTS } from '@/model/session';
 
 type UseCountdownReturn = {
   /**
@@ -20,7 +20,7 @@ type UseCountdownReturn = {
    * 進捗状況
    */
   remainngPercentage: number;
-}
+};
 
 /**
  * カウントダウンタイマーを使用する
@@ -47,8 +47,7 @@ const useCountdown: UseCountdown = () => {
 
     return () => {
       socket.off(RES_EVENTS.TICK);
-    }
-
+    };
   }, [socket]);
 
   return {
@@ -57,6 +56,6 @@ const useCountdown: UseCountdown = () => {
     milliseconds,
     remainngPercentage,
   };
-}
+};
 
-export default useCountdown
+export default useCountdown;

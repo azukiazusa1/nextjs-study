@@ -6,6 +6,8 @@ name: CI
 on:
   pull_request:
     types: [opened, synchronize]
+    paths:
+      - "apps/web/**"
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -17,7 +19,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v1
         with:
-          node-version: '>=13.7'
+          node-version: ">=13.7"
       - name: npm install
         run: npm install
       - name: Build

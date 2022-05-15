@@ -1,16 +1,18 @@
-name: 'coverage'
+name: "CI"
 on:
   pull_request:
     types: [opened, synchronize]
+    paths:
+      - "apps/web/**"
 jobs:
-  coverage:
+  build:
+    name: Build and Test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
       - name: npm install
         run: npm install
-      - uses: ArtiomTr/jest-coverage-report-action@v2.0-rc.6
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          package-manager: npm
-          test-script: npm run coverage:ci
+      - name: Build
+        run: npm run build
+      - name: test
+        run: npm run test
