@@ -1,4 +1,4 @@
-import { renderHook } from '@testing-library/react';
+import { renderHook, waitFor } from '@testing-library/react';
 import { createServer } from 'http';
 import React from 'react';
 import { act } from 'react-dom/test-utils';
@@ -19,8 +19,9 @@ describe('hooks/useCountdown', () => {
   beforeAll((done) => {
     const httpServer = createServer();
     io = new Server(httpServer);
-    httpServer.listen(3333, () => {
-      clientSocket = Client(`http://localhost:3333`);
+    httpServer.listen(() => {
+      const port = (httpServer.address() as any).port;
+      clientSocket = Client(`http://localhost:${port}`);
       io.on('connection', (socket) => {
         serverSocket = socket;
         done();
@@ -45,13 +46,14 @@ describe('hooks/useCountdown', () => {
           time: 1088000,
           remainngPercentage: 95.888,
         });
-        await new Promise((resolve) => setTimeout(resolve, 0));
       });
 
-      expect(result.current.milliseconds).toBe(1088000);
-      expect(result.current.minutes).toBe(18);
-      expect(result.current.seconds).toBe(8);
-      expect(result.current.remainngPercentage).toBe(96);
+      await waitFor(() => {
+        expect(result.current.milliseconds).toBe(1088000);
+        expect(result.current.minutes).toBe(18);
+        expect(result.current.seconds).toBe(8);
+        expect(result.current.remainngPercentage).toBe(96);
+      });
 
       await act(async () => {
         serverSocket.emit(RES_EVENTS.TICK, {
@@ -61,10 +63,12 @@ describe('hooks/useCountdown', () => {
         await new Promise((resolve) => setTimeout(resolve, 0));
       });
 
-      expect(result.current.milliseconds).toBe(12000);
-      expect(result.current.minutes).toBe(0);
-      expect(result.current.seconds).toBe(12);
-      expect(result.current.remainngPercentage).toBe(8);
+      await waitFor(() => {
+        expect(result.current.milliseconds).toBe(12000);
+        expect(result.current.minutes).toBe(0);
+        expect(result.current.seconds).toBe(12);
+        expect(result.current.remainngPercentage).toBe(8);
+      });
     });
   });
 });

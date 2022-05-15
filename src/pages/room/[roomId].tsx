@@ -2,17 +2,25 @@ import type { NextPage } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useContext, useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
+import useSound from 'use-sound';
 
 import Button from '@/components/Button/Button';
 import CountdownTimer from '@/components/CountdownTimer/CountdownTimer';
 import Participants from '@/components/Participants/Participants';
+import VolumeControl from '@/components/VolumeControl/VolumeControl';
 import { SocketContext } from '@/context/socket';
 import { CompleteResult, REQ_EVENTS, RES_EVENTS, RoomInfo } from '@/model/session';
+import alertMp3 from '@/public/sounds/alert.mp3';
 
 const Home: NextPage = () => {
   const socket = useContext(SocketContext);
   const router = useRouter();
   const [isRestTime, setIsRestTime] = useState(false);
+  const [volume, setVolume] = useState(1);
+  const [play] = useSound(alertMp3, {
+    volume,
+  });
 
   /**
    * 退出ボタンが押された時の処理
@@ -43,13 +51,19 @@ const Home: NextPage = () => {
       localStorage.setItem('score', String(prevScore + score));
 
       setIsRestTime(isRestTime);
+      if (isRestTime) {
+        toast.success('セッションを完了しました🎉');
+      } else {
+        toast.info('休憩できましたか？引き続き頑張りましょう🙌');
+      }
+      play();
     });
 
     return () => {
       socket.off(RES_EVENTS.ROOM_INFO);
       socket.off(RES_EVENTS.COMPLETE);
     };
-  }, [socket, router]);
+  }, [socket, router, play]);
 
   return (
     <div>
@@ -74,6 +88,9 @@ const Home: NextPage = () => {
           </div>
           <div className="mt-4 grid grid-cols-1 md:grid-cols-4 gap-4">
             <Participants />
+          </div>
+          <div className="mt-4 grid grid-cols-2 gap-2">
+            <VolumeControl volume={volume} onVolumeChange={(volume) => setVolume(volume)} />
           </div>
         </div>
       </main>
