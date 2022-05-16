@@ -1,5 +1,5 @@
 import { IsNotEmpty } from 'class-validator';
-import type { JoinRoomRequest, Participant } from 'models/session';
+import type { JoinRoomRequest, Participant } from 'models';
 
 export class RoomData {
   /**

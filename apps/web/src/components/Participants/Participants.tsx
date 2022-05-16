@@ -1,4 +1,4 @@
-import { MAX_PARTICIPANTS } from 'models/session';
+import { MAX_PARTICIPANTS } from 'models';
 import React from 'react';
 
 import SkeltonUser from '@/components/SkeltonUser/SkeltonUser';

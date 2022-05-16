@@ -19,7 +19,7 @@ import {
   RES_EVENTS,
   RoomInfo,
   WORK_TIME,
-} from 'models/session';
+} from 'models';
 
 @WebSocketGateway({ namespace: '/session', cors: true })
 export class SessionGateway implements OnGatewayConnection, OnGatewayDisconnect {

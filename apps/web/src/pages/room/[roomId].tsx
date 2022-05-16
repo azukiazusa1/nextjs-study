@@ -1,4 +1,4 @@
-import { CompleteResult, REQ_EVENTS, RES_EVENTS, RoomInfo } from 'models/session';
+import { CompleteResult, REQ_EVENTS, RES_EVENTS, RoomInfo } from 'models';
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';

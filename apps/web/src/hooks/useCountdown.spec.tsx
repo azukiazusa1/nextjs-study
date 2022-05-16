@@ -1,6 +1,6 @@
 import { renderHook, waitFor } from '@testing-library/react';
 import { createServer } from 'http';
-import { RES_EVENTS } from 'models/session';
+import { RES_EVENTS } from 'models';
 import React from 'react';
 import { act } from 'react-dom/test-utils';
 import { Server, Socket as ServerSocket } from 'socket.io';

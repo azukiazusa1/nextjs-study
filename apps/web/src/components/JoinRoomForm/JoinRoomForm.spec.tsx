@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { REQ_EVENTS } from 'models/session';
+import { REQ_EVENTS } from 'models';
 import React from 'react';
 
 import { SocketContext } from '@/context/socket';

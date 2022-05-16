@@ -1,4 +1,4 @@
-import { REQ_EVENTS, RES_EVENTS } from 'models/session';
+import { REQ_EVENTS, RES_EVENTS } from 'models';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { useContext, useEffect, useRef, useState } from 'react';
