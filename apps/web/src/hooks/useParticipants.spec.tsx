@@ -1,12 +1,12 @@
 import { renderHook, waitFor } from '@testing-library/react';
 import { createServer } from 'http';
+import { Participant, RES_EVENTS } from 'models/session';
 import React from 'react';
 import { act } from 'react-dom/test-utils';
 import { Server, Socket as ServerSocket } from 'socket.io';
 import { io as Client, Socket as ClientSocket } from 'socket.io-client';
 
 import { SocketContext } from '@/context/socket';
-import { Participant, RES_EVENTS } from '@/model/session';
 
 import useParticipants from './useParticipants';
 

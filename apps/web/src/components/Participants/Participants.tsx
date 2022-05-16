@@ -1,9 +1,9 @@
+import { MAX_PARTICIPANTS } from 'models/session';
 import React from 'react';
 
 import SkeltonUser from '@/components/SkeltonUser/SkeltonUser';
 import User from '@/components/User/User';
 import useParticipants from '@/hooks/useParticipants';
-import { MAX_PARTICIPANTS } from '@/model/session';
 
 const Participants: React.FC = () => {
   const { participants } = useParticipants();

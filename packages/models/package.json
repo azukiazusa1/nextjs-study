@@ -1,0 +1,16 @@
+{
+  "name": "models",
+  "version": "0.0.0",
+  "main": "./index.ts",
+  "types": "./index.ts",
+  "license": "MIT",
+  "scripts": {
+    "lint": "eslint --fix"
+  },
+  "dependencies": {
+    "eslint-config-custom": "*",
+    "eslint": "^8.15.0",
+    "tsconfig": "*",
+    "typescript": "^4.6.4"
+  }
+}

@@ -1,3 +1,4 @@
+import { CompleteResult, REQ_EVENTS, RES_EVENTS, RoomInfo } from 'models/session';
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
@@ -10,7 +11,6 @@ import CountdownTimer from '@/components/CountdownTimer/CountdownTimer';
 import Participants from '@/components/Participants/Participants';
 import VolumeControl from '@/components/VolumeControl/VolumeControl';
 import { SocketContext } from '@/context/socket';
-import { CompleteResult, REQ_EVENTS, RES_EVENTS, RoomInfo } from '@/model/session';
 
 import alertMp3 from '../../../public/sounds/alert.mp3';
 
