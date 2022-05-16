@@ -1,12 +1,12 @@
 import { renderHook, waitFor } from '@testing-library/react';
 import { createServer } from 'http';
+import { RES_EVENTS } from 'models';
 import React from 'react';
 import { act } from 'react-dom/test-utils';
 import { Server, Socket as ServerSocket } from 'socket.io';
 import { io as Client, Socket as ClientSocket } from 'socket.io-client';
 
 import { SocketContext } from '@/context/socket';
-import { RES_EVENTS } from '@/model/session';
 
 import useCountdown from './useCountdown';
 

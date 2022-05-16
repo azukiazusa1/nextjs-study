@@ -11,7 +11,7 @@ type Props = {
   alt: string;
   /**
    * 現在オンライン状態かどうか
-   * @default '''
+   * @default ''
    */
   status?: 'online' | 'offline' | '';
   className?: string;

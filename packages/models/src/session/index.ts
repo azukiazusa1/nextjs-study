@@ -4,6 +4,16 @@
 export const MAX_PARTICIPANTS = 4;
 
 /**
+ * 作業時間（ミリ秒）
+ */
+export const WORK_TIME = 25 * 60 * 1000;
+
+/**
+ * 休憩時間（ミリ秒）
+ */
+export const REST_TIME = 5 * 60 * 1000;
+
+/**
  * サーバーから送信されるイベント名
  */
 export const RES_EVENTS = {
@@ -51,30 +61,29 @@ export const REQ_EVENTS = {
   GET_ROOM_INFO: 'getRoomInfo',
 } as const;
 
-export interface MessageEventDto extends MessageDto {
-  socketId?: string;
-  roomId: string;
-  avatar: string;
-}
-
-export interface MessageDto {
-  order: number;
-  username: string;
-  content: string;
-  createdAt: Date;
-}
-
-export interface ChatDto extends MessageDto {
-  socketId?: string;
-  roomId: string;
-  avatar: string;
-}
-
+/**
+ * セッションの参加者
+ */
 export interface Participant {
-  roomId: string;
+  /**
+   * 参加者のID
+   */
   id: string;
+  /**
+   * 参加している部屋のID
+   */
+  roomId: string;
+  /**
+   * 参加者の名前
+   */
   username: string;
+  /**
+   * 参加者のアバター
+   */
   avatar: string;
+  /**
+   * 参加者のスコア
+   */
   score: number;
 }
 
@@ -89,12 +98,27 @@ export interface RoomInfo {
   isRestTime: boolean;
 }
 
-export interface JoinRoomDto {
+/**
+ * 部屋に参加するリクエストデータ
+ */
+export interface JoinRoomRequest {
+  /**
+   * 参加者の名前
+   */
   username: string;
+  /**
+   * 参加者のアバター
+   */
   avatar: string;
+  /**
+   * 初期スコア
+   */
   score: number;
 }
 
+/**
+ * セッションが終了したときのイベント
+ */
 export interface CompleteResult {
   /**
    * 次のセッションが休憩時間かどうか

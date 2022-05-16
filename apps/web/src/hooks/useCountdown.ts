@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 
 import { SocketContext } from '@/context/socket';
-import { RES_EVENTS } from '@/model/session';
+import { RES_EVENTS } from 'models';
 
 type UseCountdownReturn = {
   /**

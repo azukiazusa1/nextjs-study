@@ -10,17 +10,16 @@ import {
 } from '@nestjs/websockets';
 import { nanoid } from 'nanoid';
 import { Socket, Server } from 'socket.io';
+import { JoinRoomDto, RoomData } from './session.dto';
 import {
-  JoinRoomDto,
   MAX_PARTICIPANTS,
   Participant,
   REQ_EVENTS,
   REST_TIME,
   RES_EVENTS,
-  RoomData,
   RoomInfo,
   WORK_TIME,
-} from './session.dto';
+} from 'models';
 
 @WebSocketGateway({ namespace: '/session', cors: true })
 export class SessionGateway implements OnGatewayConnection, OnGatewayDisconnect {
