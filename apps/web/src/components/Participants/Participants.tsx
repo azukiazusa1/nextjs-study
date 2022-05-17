@@ -3,10 +3,12 @@ import React from 'react';
 
 import SkeltonUser from '@/components/SkeltonUser/SkeltonUser';
 import User from '@/components/User/User';
+import useMessages from '@/hooks/useMessages';
 import useParticipants from '@/hooks/useParticipants';
 
 const Participants: React.FC = () => {
   const { participants } = useParticipants();
+  const { messages } = useMessages();
 
   // セッションの最大参加者数に満たさない場合は、
   // その数だけスケルトンユーザーを表示する
@@ -23,6 +25,7 @@ const Participants: React.FC = () => {
           image={`/images/${participant.avatar}.png`}
           status={'online'}
           score={participant.score}
+          message={messages.get(participant.id)}
         />
       ))}
       {skeltonUsers.map((_, index) => (

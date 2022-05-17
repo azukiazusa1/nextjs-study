@@ -8,6 +8,7 @@ import useSound from 'use-sound';
 
 import Button from '@/components/Button/Button';
 import CountdownTimer from '@/components/CountdownTimer/CountdownTimer';
+import EmojiPicker from '@/components/EmojiPicker/EmojiPicker';
 import Participants from '@/components/Participants/Participants';
 import VolumeControl from '@/components/VolumeControl/VolumeControl';
 import { SocketContext } from '@/context/socket';
@@ -19,7 +20,9 @@ const Room: NextPage = () => {
   const router = useRouter();
   const [isRestTime, setIsRestTime] = useState(false);
   const [volume, setVolume] = useState(1);
-  const [play] = useSound(alertMp3);
+  const [play] = useSound(alertMp3, {
+    volume,
+  });
 
   /**
    * 退出ボタンが押された時の処理
@@ -89,10 +92,11 @@ const Room: NextPage = () => {
           <div className="grid place-items-center">
             <CountdownTimer />
           </div>
-          <div className="mt-4 grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div className="mt-4 p-2 grid grid-cols-1 md:grid-cols-4 gap-8">
             <Participants />
           </div>
-          <div className="mt-4 grid grid-cols-2 gap-2">
+          <div className="mt-8 p-2 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4  gap-4">
+            <EmojiPicker />
             <VolumeControl volume={volume} onVolumeChange={(volume) => setVolume(volume)} />
           </div>
         </div>

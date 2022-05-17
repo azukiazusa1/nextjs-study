@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`components/EmojiPicker should render 1`] = `
+<div>
+  <div
+    class="btn-group"
+  >
+    <button
+      class="btn btn-circle"
+    >
+      👍
+    </button>
+    <button
+      class="btn btn-circle"
+    >
+      ❤️
+    </button>
+    <button
+      class="btn btn-circle"
+    >
+      😆
+    </button>
+    <button
+      class="btn btn-circle"
+    >
+      👏
+    </button>
+    <button
+      class="btn btn-circle"
+    >
+      🦀
+    </button>
+  </div>
+</div>
+`;

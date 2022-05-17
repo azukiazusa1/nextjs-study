@@ -8,12 +8,22 @@ type Props = {
   image: string;
   status: 'online' | 'offline' | '';
   score: number;
+  message?: string;
 };
 
-const User: React.FC<Props> = ({ className = '', username, image, status, score }: Props) => {
+const User: React.FC<Props> = ({
+  className = '',
+  username,
+  image,
+  status,
+  score,
+  message = '',
+}: Props) => {
   return (
     <div className={`flex max-w-60 ${className}`}>
-      <Avatar status={status} src={image} alt={username} />
+      <div className={`tooltip ${!!message && 'tooltip-open'} tooltip-primary`} data-tip={message}>
+        <Avatar status={status} src={image} alt={username} />
+      </div>
       <div className="flex flex-col ml-4 space-y-2">
         <div className="truncate">{username}</div>
         <div className="countdown">
