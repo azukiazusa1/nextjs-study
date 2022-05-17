@@ -6,6 +6,7 @@
   "license": "MIT",
   "scripts": {
     "lint": "eslint --fix src/**/*.ts",
+    "dev": "tsc -w",
     "build": "tsc"
   },
   "dependencies": {

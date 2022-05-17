@@ -19,6 +19,7 @@ import {
   RES_EVENTS,
   RoomInfo,
   WORK_TIME,
+  Message,
 } from 'models';
 
 @WebSocketGateway({ namespace: '/session', cors: true })
@@ -59,7 +60,6 @@ export class SessionGateway implements OnGatewayConnection, OnGatewayDisconnect 
   getRoomInfo(client: Socket, roomId: string): WsResponse<RoomInfo> {
     const room = this.rooms.get(roomId);
 
-    console.log(roomId);
     if (!room) {
       throw new NotFoundException(`Room ${roomId} not found`);
     }
@@ -130,6 +130,18 @@ export class SessionGateway implements OnGatewayConnection, OnGatewayDisconnect 
         this.rooms.delete(roomId);
       }
       this.wss.to(roomId).emit(RES_EVENTS.QUITED, { id: socketId });
+    }
+  }
+
+  @SubscribeMessage(REQ_EVENTS.SEND_MESSAGE)
+  sendMessage(client: Socket, message: string): void {
+    this.logger.log(`Send message... message: ${message}`);
+    const roomId = this.participants.get(client.id);
+    if (roomId) {
+      this.wss.to(roomId).emit(RES_EVENTS.MESSAGE, {
+        message,
+        participantId: client.id,
+      } as Message);
     }
   }
 

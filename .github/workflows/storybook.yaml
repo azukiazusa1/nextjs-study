@@ -6,7 +6,7 @@ on:
       - main
       - develop
     paths:
-      - "apps/web/**"
+      - 'apps/web/**'
 
 jobs:
   deploy:
@@ -14,7 +14,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: install packages
-        run: cd apps/web && npm install --legacy-peer-deps
+        run: npm install --legacy-peer-deps
       - name: build storybook
         run: cd apps/web && npm run build-storybook
       - name: deploy storybook

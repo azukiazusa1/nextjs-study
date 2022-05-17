@@ -7,17 +7,71 @@ exports[`components/User Renders Default story 1`] = `
       class="flex max-w-60 "
     >
       <div
-        class="avatar online undefined"
+        class="tooltip false tooltip-primary"
+        data-tip=""
       >
         <div
-          class="w-12 h-12 rounded-full"
+          class="avatar online undefined"
         >
-          <img
-            alt="@johndoe"
-            height="48px"
-            src="https://images.unsplash.com/photo-1584361853901-dd1904bb7987?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1974&q=80"
-            width="48px"
-          />
+          <div
+            class="w-12 h-12 rounded-full"
+          >
+            <img
+              alt="@johndoe"
+              height="48px"
+              src="https://images.unsplash.com/photo-1584361853901-dd1904bb7987?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1974&q=80"
+              width="48px"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="flex flex-col ml-4 space-y-2"
+      >
+        <div
+          class="truncate"
+        >
+          @johndoe
+        </div>
+        <div
+          class="countdown"
+        >
+          🍅 ×
+          <span
+            style="--value: 12;"
+          >
+            12
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+`;
+
+exports[`components/User Renders hasMessage story 1`] = `
+<body>
+  <div>
+    <div
+      class="flex max-w-60 "
+    >
+      <div
+        class="tooltip tooltip-open tooltip-primary"
+        data-tip="👍"
+      >
+        <div
+          class="avatar online undefined"
+        >
+          <div
+            class="w-12 h-12 rounded-full"
+          >
+            <img
+              alt="@johndoe"
+              height="48px"
+              src="https://images.unsplash.com/photo-1584361853901-dd1904bb7987?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1974&q=80"
+              width="48px"
+            />
+          </div>
         </div>
       </div>
       <div
@@ -51,17 +105,22 @@ exports[`components/User Renders isOffline story 1`] = `
       class="flex max-w-60 "
     >
       <div
-        class="avatar offline undefined"
+        class="tooltip false tooltip-primary"
+        data-tip=""
       >
         <div
-          class="w-12 h-12 rounded-full"
+          class="avatar offline undefined"
         >
-          <img
-            alt="@johndoe"
-            height="48px"
-            src="https://images.unsplash.com/photo-1584361853901-dd1904bb7987?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1974&q=80"
-            width="48px"
-          />
+          <div
+            class="w-12 h-12 rounded-full"
+          >
+            <img
+              alt="@johndoe"
+              height="48px"
+              src="https://images.unsplash.com/photo-1584361853901-dd1904bb7987?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1974&q=80"
+              width="48px"
+            />
+          </div>
         </div>
       </div>
       <div

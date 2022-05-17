@@ -1,7 +1,7 @@
+import { CompleteResult, Participant, RES_EVENTS, RoomInfo } from 'models';
 import { useContext, useEffect, useState } from 'react';
 
 import { SocketContext } from '@/context/socket';
-import { CompleteResult, Participant, RES_EVENTS, RoomInfo } from 'models';
 
 type UseParticipantsReturn = {
   /**

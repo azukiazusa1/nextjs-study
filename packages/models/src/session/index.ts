@@ -41,6 +41,10 @@ export const RES_EVENTS = {
    * タイマーが完了したとき
    */
   COMPLETE: 'complete',
+  /**
+   * メッセージの受信
+   */
+  MESSAGE: 'message',
 } as const;
 
 /**
@@ -59,6 +63,10 @@ export const REQ_EVENTS = {
    * 部屋情報の取得
    */
   GET_ROOM_INFO: 'getRoomInfo',
+  /**
+   * メッセージの送信
+   */
+  SEND_MESSAGE: 'sendMessage',
 } as const;
 
 /**
@@ -128,4 +136,15 @@ export interface CompleteResult {
    * セッションの完了により取得したスコア
    */
   score: number;
+}
+
+export interface Message {
+  /**
+   * 送信者のID
+   */
+  participantId: string;
+  /**
+   * 送信内容
+   */
+  message: string;
 }
