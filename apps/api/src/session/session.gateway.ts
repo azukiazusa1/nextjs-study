@@ -1,114 +1,77 @@
-import { ConflictException, Logger, NotFoundException } from '@nestjs/common';
+import { Logger } from '@nestjs/common';
 import {
   OnGatewayConnection,
   OnGatewayDisconnect,
-  OnGatewayInit,
   SubscribeMessage,
   WebSocketGateway,
   WebSocketServer,
+  WsException,
   WsResponse,
 } from '@nestjs/websockets';
-import { nanoid } from 'nanoid';
 import { Socket, Server } from 'socket.io';
 import { JoinRoomDto, RoomData } from './session.dto';
-import {
-  MAX_PARTICIPANTS,
-  Participant,
-  REQ_EVENTS,
-  REST_TIME,
-  RES_EVENTS,
-  RoomInfo,
-  WORK_TIME,
-  Message,
-} from 'models';
+import { REQ_EVENTS, REST_TIME, RES_EVENTS, RoomInfo, WORK_TIME, Message } from 'models';
+import { SessionService } from './session.service';
 
 @WebSocketGateway({ namespace: '/session', cors: true })
 export class SessionGateway implements OnGatewayConnection, OnGatewayDisconnect {
-  private static rooms: Map<string, RoomData> = new Map();
-  private static participants: Map<string, string> = new Map();
-  private logger: Logger = new Logger('AppGateway');
+  private logger: Logger = new Logger('SessionGateway');
 
   @WebSocketServer() wss: Server;
 
+  /**
+   * @TODO remove this
+   */
   private rooms: Map<string, RoomData> = new Map();
-  private participants: Map<string, string> = new Map();
+
+  constructor(private readonly sessionService: SessionService) {}
 
   handleConnection(client: Socket, ...args: any[]) {
     const socketId = client.id;
-    this.logger.log(`New connecting... socket id: ${socketId}`);
-    this.participants.set(socketId, '');
+    this.logger.log(`Connection... socket id: ${socketId}`);
+    this.sessionService.connect(socketId);
   }
 
-  handleDisconnect(socket: Socket): void {
+  async handleDisconnect(socket: Socket): Promise<void> {
     const socketId = socket.id;
-    this.logger.log(`Disconnection... socket id: ${socketId}`);
-    const roomId = this.participants.get(socketId);
-    this.participants.delete(socketId);
-    const room = this.rooms.get(roomId);
-    if (room) {
+    this.logger.debug(`Disconnection... socket id: ${socketId}`);
+    const roomId = await this.sessionService.disconnect(socketId);
+    if (roomId) {
       socket.leave(roomId);
-      room.participants = room.participants.filter((p) => p.id !== socketId);
-      if (room.participants.length === 0) {
-        clearInterval(room.timer);
-        this.rooms.delete(roomId);
-      }
       this.wss.to(roomId).emit(RES_EVENTS.QUITED, { id: socketId });
     }
   }
 
   @SubscribeMessage(REQ_EVENTS.GET_ROOM_INFO)
-  getRoomInfo(client: Socket, roomId: string): WsResponse<RoomInfo> {
-    const room = this.rooms.get(roomId);
+  async getRoomInfo(client: Socket, roomId: string): Promise<WsResponse<RoomInfo>> {
+    const socketId = client.id;
+    this.logger.log(`Get room info... room id: ${roomId} socket id: ${socketId}`);
 
-    if (!room) {
-      throw new NotFoundException(`Room ${roomId} not found`);
+    try {
+      const room = await this.sessionService.getRoomInfo(socketId, roomId);
+
+      return {
+        event: RES_EVENTS.ROOM_INFO,
+        data: room,
+      };
+    } catch (e) {
+      throw new WsException(e.message);
     }
-
-    return {
-      event: RES_EVENTS.ROOM_INFO,
-      data: {
-        participants: room.participants,
-        isRestTime: room.isRestTime,
-      },
-    };
   }
 
   @SubscribeMessage(REQ_EVENTS.JOIN_ROOM)
-  joinRoom(
+  async joinRoom(
     client: Socket,
-    { username, score, avatar }: JoinRoomDto,
-  ): WsResponse<{ roomId: string }> {
-    this.logger.log(`Join room... username: ${username}`);
-    let roomId: string;
+    joinRoomDto: JoinRoomDto,
+  ): Promise<WsResponse<{ roomId: string }>> {
+    const socketId = client.id;
+    this.logger.log(`Join room... socketId: ${socketId}`);
 
-    for (const [id, roomData] of this.rooms.entries()) {
-      if (roomData.participants.length < MAX_PARTICIPANTS) {
-        roomId = id;
-        break;
-      }
-    }
+    const roomId = await this.sessionService.joinRoom(socketId, joinRoomDto);
 
-    if (!roomId) {
-      roomId = nanoid();
-      const timer = this.startTimer(roomId, this.wss);
-      this.rooms.set(roomId, new RoomData(username, timer));
-    }
-
-    this.participants.set(client.id, roomId);
-    const participant: Participant = {
-      roomId,
-      username,
-      avatar,
-      score,
-      id: client.id,
-    };
-
-    this.rooms.get(roomId).participants.push(participant);
     client.join(roomId);
 
-    client.to(roomId).emit(RES_EVENTS.PARTICIPATED, {
-      participant,
-    });
+    this.wss.to(roomId).emit(RES_EVENTS.JOINED, { id: socketId });
 
     return {
       event: RES_EVENTS.JOINED,
@@ -117,26 +80,19 @@ export class SessionGateway implements OnGatewayConnection, OnGatewayDisconnect 
   }
 
   @SubscribeMessage(REQ_EVENTS.QUIT)
-  quit(client: Socket, roomId: string): void {
-    this.logger.log(`Quit room... room id: ${roomId}`);
+  async quit(client: Socket, roomId: string): Promise<void> {
     const socketId = client.id;
-    this.participants.delete(socketId);
-    const room = this.rooms.get(roomId);
-    if (room) {
-      client.leave(roomId);
-      room.participants = room.participants.filter((p) => p.id !== socketId);
-      if (room.participants.length === 0) {
-        clearInterval(room.timer);
-        this.rooms.delete(roomId);
-      }
-      this.wss.to(roomId).emit(RES_EVENTS.QUITED, { id: socketId });
-    }
+    this.logger.debug(`Quit room... room id: ${roomId} socket id: ${socketId}`);
+
+    await this.sessionService.quitRoom(socketId, roomId);
+
+    this.wss.to(roomId).emit(RES_EVENTS.QUITED, { id: socketId });
   }
 
   @SubscribeMessage(REQ_EVENTS.SEND_MESSAGE)
-  sendMessage(client: Socket, message: string): void {
-    this.logger.log(`Send message... message: ${message}`);
-    const roomId = this.participants.get(client.id);
+  async sendMessage(client: Socket, message: string): Promise<void> {
+    this.logger.debug(`Send message... message: ${message}`);
+    const roomId = await this.sessionService.getRoomId(client.id);
     if (roomId) {
       this.wss.to(roomId).emit(RES_EVENTS.MESSAGE, {
         message,
@@ -145,6 +101,9 @@ export class SessionGateway implements OnGatewayConnection, OnGatewayDisconnect 
     }
   }
 
+  /**
+   * @TODO remove this
+   */
   private startTimer(roomId: string, wss: Server): NodeJS.Timeout {
     let startTime = Date.now();
     let time = 1 * 10 * 1000;
@@ -176,6 +135,9 @@ export class SessionGateway implements OnGatewayConnection, OnGatewayDisconnect 
     return timer;
   }
 
+  /**
+   * @TODO remove this
+   */
   private onComplete(roomId: string, isRestTime: boolean): void {
     let score = 0;
     const room = this.rooms.get(roomId);

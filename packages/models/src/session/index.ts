@@ -101,9 +101,13 @@ export interface RoomInfo {
    */
   participants: Participant[];
   /**
-   * 現在休憩時間かどうか
+   * 部屋の作成時間（ミリ秒）
    */
-  isRestTime: boolean;
+  createdAt: number;
+  /**
+   * 部屋の経過時間（ミリ秒）
+   */
+  elapsedTime: number;
 }
 
 /**
