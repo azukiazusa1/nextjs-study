@@ -1,10 +1,7 @@
 import { Module } from '@nestjs/common';
-import { SessionGateway } from './session/session.gateway';
 import { SessionModule } from './session/session.module';
 import { RedisModule } from '@liaoliaots/nestjs-redis';
 import { ConfigModule } from '@nestjs/config';
-import { SessionService } from './session/session.service';
-import { SessionRepository } from './session/session.repository';
 
 @Module({
   imports: [

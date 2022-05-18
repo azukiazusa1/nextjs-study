@@ -1,6 +1,4 @@
-import { InjectRedis } from '@liaoliaots/nestjs-redis';
 import { Injectable } from '@nestjs/common';
-import Redis from 'ioredis';
 import { MAX_PARTICIPANTS, RoomInfo } from 'models';
 import { nanoid } from 'nanoid';
 import { JoinRoomDto } from './session.dto';
@@ -8,13 +6,10 @@ import { SessionRepository } from './session.repository';
 
 @Injectable()
 export class SessionService {
-  constructor(
-    private readonly sessionRepository: SessionRepository,
-    @InjectRedis() private readonly client: Redis,
-  ) {}
+  constructor(private readonly sessionRepository: SessionRepository) {}
 
-  connect(participantId: string): void {
-    this.sessionRepository.setParticipant(participantId);
+  async connect(participantId: string): Promise<void> {
+    await this.sessionRepository.setParticipant(participantId);
   }
 
   /**
@@ -47,7 +42,7 @@ export class SessionService {
    */
   async getRoomInfo(participantId: string, roomId: string): Promise<RoomInfo> {
     // 部屋情報が見つからない
-    if (!(await this.client.exists(`room:${roomId}`))) {
+    if (!(await this.getRoomInfo(participantId, roomId))) {
       throw new Error(`Room ${roomId} not found`);
     }
 
