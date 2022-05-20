@@ -129,6 +129,16 @@ export interface JoinRoomRequest {
 }
 
 /**
+ * 部屋参加リクエストに対するレスポンス
+ */
+export interface JoinRoomResponse {
+  /**
+   * 部屋ID
+   */
+  roomId: string;
+}
+
+/**
  * セッションが終了したときのイベント
  */
 export interface CompleteResult {

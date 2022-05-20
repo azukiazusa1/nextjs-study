@@ -24,13 +24,24 @@ export class SessionRepository {
    */
   async registerParticipant(
     participantId: string,
+    roomId: string,
     { username, avatar, score }: JoinRoomDto,
-  ): Promise<void> {
+  ): Promise<Participant> {
     await this.client.hmset(`participant:${participantId}`, {
       username,
       avatar,
       score: score.toString(),
     });
+
+    const participant: Participant = {
+      id: participantId,
+      roomId,
+      username,
+      avatar,
+      score,
+    };
+
+    return participant;
   }
 
   /**
@@ -84,6 +95,14 @@ export class SessionRepository {
   }
 
   /**
+   * 部屋が存在するかどうかを判定する
+   * @param roomId 部屋ID
+   */
+  async isRoomExists(roomId: string): Promise<boolean> {
+    return (await this.client.hexists(`room:${roomId}`, 'createdAt')) > 0;
+  }
+
+  /**
    * 部屋に参加している人数を取得する
    * @param roomId
    * @returns 参加している人数
@@ -107,8 +126,9 @@ export class SessionRepository {
    * @param roomId 部屋ID
    */
   async createRoom(roomId: string): Promise<void> {
-    await this.client.hset(roomId, 'createdAt', Date.now());
-    await this.client.sadd('availableRooms', roomId);
+    await this.client.hset(`room:${roomId}`, 'createdAt', Date.now());
+    console.log(await this.client.sadd('availableRooms', roomId));
+    return;
   }
 
   /**
@@ -125,8 +145,8 @@ export class SessionRepository {
    * 参加可能な部屋をランダムに一つ取得する
    * @returns 参加可能な部屋ID
    */
-  async getRandomAvailableRoom(): Promise<string> {
-    return (await this.client.srandmember('availableRooms', 1)) as string;
+  async getRandomAvailableRoom(): Promise<string | null> {
+    return (await this.client.srandmember('availableRooms')) as string | null;
   }
 
   /**

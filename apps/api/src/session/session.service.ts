@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { MAX_PARTICIPANTS, RoomInfo } from 'models';
+import { MAX_PARTICIPANTS, Participant, RoomInfo } from 'models';
 import { nanoid } from 'nanoid';
 import { JoinRoomDto } from './session.dto';
 import { SessionRepository } from './session.repository';
@@ -42,7 +42,7 @@ export class SessionService {
    */
   async getRoomInfo(participantId: string, roomId: string): Promise<RoomInfo> {
     // 部屋情報が見つからない
-    if (!(await this.getRoomInfo(participantId, roomId))) {
+    if (!(await this.sessionRepository.isRoomExists(roomId))) {
       throw new Error(`Room ${roomId} not found`);
     }
 
@@ -78,12 +78,17 @@ export class SessionService {
    * @param joinRoomDto 参加者情報
    * @returns 部屋ID
    */
-  async joinRoom(participantId: string, joinRoomDto: JoinRoomDto): Promise<string> {
-    let roomId: string;
+  async joinRoom(
+    participantId: string,
+    joinRoomDto: JoinRoomDto,
+  ): Promise<{
+    roomId: string;
+    participant: Participant;
+  }> {
+    let roomId: string | null;
 
     // 参加可能な部屋があるかどうか
     roomId = await this.sessionRepository.getRandomAvailableRoom();
-    console.log(roomId);
     if (!roomId) {
       roomId = nanoid();
       await this.sessionRepository.createRoom(roomId);
@@ -98,9 +103,16 @@ export class SessionService {
     }
 
     // 参加者情報を設定
-    await this.sessionRepository.registerParticipant(participantId, joinRoomDto);
+    const participant = await this.sessionRepository.registerParticipant(
+      participantId,
+      roomId,
+      joinRoomDto,
+    );
 
-    return roomId;
+    return {
+      roomId,
+      participant,
+    };
   }
 
   /**

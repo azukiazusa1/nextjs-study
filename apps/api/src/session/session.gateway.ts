@@ -10,7 +10,15 @@ import {
 } from '@nestjs/websockets';
 import { Socket, Server } from 'socket.io';
 import { JoinRoomDto, RoomData } from './session.dto';
-import { REQ_EVENTS, REST_TIME, RES_EVENTS, RoomInfo, WORK_TIME, Message } from 'models';
+import {
+  REQ_EVENTS,
+  REST_TIME,
+  RES_EVENTS,
+  RoomInfo,
+  WORK_TIME,
+  Message,
+  JoinRoomResponse,
+} from 'models';
 import { SessionService } from './session.service';
 
 @WebSocketGateway({ namespace: '/session', cors: true })
@@ -49,29 +57,26 @@ export class SessionGateway implements OnGatewayConnection, OnGatewayDisconnect 
 
     try {
       const room = await this.sessionService.getRoomInfo(socketId, roomId);
-
+      console.log(RES_EVENTS.ROOM_INFO);
       return {
         event: RES_EVENTS.ROOM_INFO,
         data: room,
       };
     } catch (e) {
+      this.logger.log(`Get room info error... ${e.message}`);
       throw new WsException(e.message);
     }
   }
 
   @SubscribeMessage(REQ_EVENTS.JOIN_ROOM)
-  async joinRoom(
-    client: Socket,
-    joinRoomDto: JoinRoomDto,
-  ): Promise<WsResponse<{ roomId: string }>> {
+  async joinRoom(client: Socket, joinRoomDto: JoinRoomDto): Promise<WsResponse<JoinRoomResponse>> {
     const socketId = client.id;
     this.logger.log(`Join room... socketId: ${socketId}`);
 
-    const roomId = await this.sessionService.joinRoom(socketId, joinRoomDto);
+    const { roomId, participant } = await this.sessionService.joinRoom(socketId, joinRoomDto);
 
+    this.wss.to(roomId).emit(RES_EVENTS.PARTICIPATED, { participant });
     client.join(roomId);
-
-    this.wss.to(roomId).emit(RES_EVENTS.JOINED, { id: socketId });
 
     return {
       event: RES_EVENTS.JOINED,
