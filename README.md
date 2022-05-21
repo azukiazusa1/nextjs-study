@@ -1,6 +1,8 @@
 # ポモドーロ・セッション
 
-<img src="./docs/logo_transparent.png" alt="Pomodoro Session" width="400" height="400">
+<p align="center">
+  <img src="./docs/logo_transparent.png" alt="Pomodoro Session" width="400" height="400">
+</p>
 
 ポモドーロ・セッションは最大4人でランダムに集まり、ポモドーロ・・テクニックをみんなで実践するサービスです。
 
