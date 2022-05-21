@@ -101,9 +101,13 @@ export interface RoomInfo {
    */
   participants: Participant[];
   /**
-   * 現在休憩時間かどうか
+   * 部屋の作成時間（ミリ秒）
    */
-  isRestTime: boolean;
+  createdAt: number;
+  /**
+   * 部屋の経過時間（ミリ秒）
+   */
+  elapsedTime: number;
 }
 
 /**
@@ -122,6 +126,16 @@ export interface JoinRoomRequest {
    * 初期スコア
    */
   score: number;
+}
+
+/**
+ * 部屋参加リクエストに対するレスポンス
+ */
+export interface JoinRoomResponse {
+  /**
+   * 部屋ID
+   */
+  roomId: string;
 }
 
 /**

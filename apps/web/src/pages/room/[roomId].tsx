@@ -1,4 +1,4 @@
-import { CompleteResult, REQ_EVENTS, RES_EVENTS, RoomInfo } from 'models';
+import { CompleteResult, REQ_EVENTS, RES_EVENTS } from 'models';
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
@@ -42,9 +42,6 @@ const Room: NextPage = () => {
     socket.emit(REQ_EVENTS.GET_ROOM_INFO, router.query.roomId);
 
     // 部屋情報を受信した時、現在休憩時間かどうかを取得
-    socket.on(RES_EVENTS.ROOM_INFO, ({ isRestTime }: RoomInfo) => {
-      setIsRestTime(isRestTime);
-    });
 
     // セッションが完了した時、スコアを取得する
     // 取得したスコアを現在のスコアに加算してローカルストレージに保存する
@@ -68,7 +65,7 @@ const Room: NextPage = () => {
     });
 
     return () => {
-      socket.off(RES_EVENTS.ROOM_INFO);
+      // socket.off(RES_EVENTS.ROOM_INFO);
       socket.off(RES_EVENTS.COMPLETE);
     };
   }, [socket, router, play]);

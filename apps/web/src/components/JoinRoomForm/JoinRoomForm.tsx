@@ -1,4 +1,4 @@
-import { REQ_EVENTS, RES_EVENTS } from 'models';
+import { JoinRoomResponse,REQ_EVENTS, RES_EVENTS } from 'models';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { useContext, useEffect, useRef, useState } from 'react';
@@ -50,7 +50,7 @@ const JoinRoomForm = () => {
   };
 
   useEffect(() => {
-    socket.on(RES_EVENTS.JOINED, ({ roomId }: { roomId: string }) => {
+    socket.on(RES_EVENTS.JOINED, ({ roomId }: JoinRoomResponse) => {
       router.push(`/room/${roomId}`);
     });
 

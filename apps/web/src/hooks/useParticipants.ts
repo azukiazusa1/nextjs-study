@@ -20,7 +20,9 @@ const useParticipants: UseParticipants = () => {
   const [participants, setParticipants] = useState<Participant[]>([]);
 
   useEffect(() => {
+    console.log(RES_EVENTS.ROOM_INFO)
     socket.on(RES_EVENTS.ROOM_INFO, ({ participants }: RoomInfo) => {
+      console.log('ROOM_INFO:', participants);
       setParticipants(participants);
     });
 
@@ -39,6 +41,7 @@ const useParticipants: UseParticipants = () => {
     });
 
     socket.on(RES_EVENTS.PARTICIPATED, ({ participant }: { participant: Participant }) => {
+      console.log('PARTICIPATED', participant);
       setParticipants((prev) => [...prev, participant]);
     });
 
