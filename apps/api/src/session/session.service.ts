@@ -50,7 +50,7 @@ export class SessionService {
     const participantIds = participants.map((participant) => participant.id);
     // 指定した部屋に参加者がいない
     if (!participantIds.includes(participantId)) {
-      throw new Error(`Participant ${participantId} not found`);
+      throw new Error(`Participant ${participantId} not found in room ${roomId}`);
     }
 
     const createdAt = await this.sessionRepository.getRoomCreatedAt(roomId);

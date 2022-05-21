@@ -2,6 +2,7 @@ import { Logger } from '@nestjs/common';
 import {
   OnGatewayConnection,
   OnGatewayDisconnect,
+  OnGatewayInit,
   SubscribeMessage,
   WebSocketGateway,
   WebSocketServer,
@@ -22,9 +23,12 @@ import {
 import { SessionService } from './session.service';
 
 @WebSocketGateway({ namespace: '/session', cors: true })
-export class SessionGateway implements OnGatewayConnection, OnGatewayDisconnect {
+export class SessionGateway implements OnGatewayConnection, OnGatewayDisconnect, OnGatewayInit {
   private logger: Logger = new Logger('SessionGateway');
 
+  afterInit(server: any) {
+    this.wss = server;
+  }
   @WebSocketServer() wss: Server;
 
   /**
@@ -32,7 +36,7 @@ export class SessionGateway implements OnGatewayConnection, OnGatewayDisconnect 
    */
   private rooms: Map<string, RoomData> = new Map();
 
-  constructor(private readonly sessionService: SessionService) {}
+  constructor(private readonly sessionService: SessionService) { }
 
   handleConnection(client: Socket, ...args: any[]) {
     const socketId = client.id;
@@ -57,7 +61,6 @@ export class SessionGateway implements OnGatewayConnection, OnGatewayDisconnect 
 
     try {
       const room = await this.sessionService.getRoomInfo(socketId, roomId);
-      console.log(RES_EVENTS.ROOM_INFO);
       return {
         event: RES_EVENTS.ROOM_INFO,
         data: room,
@@ -91,6 +94,7 @@ export class SessionGateway implements OnGatewayConnection, OnGatewayDisconnect 
 
     await this.sessionService.quitRoom(socketId, roomId);
 
+    client.leave(roomId);
     this.wss.to(roomId).emit(RES_EVENTS.QUITED, { id: socketId });
   }
 
