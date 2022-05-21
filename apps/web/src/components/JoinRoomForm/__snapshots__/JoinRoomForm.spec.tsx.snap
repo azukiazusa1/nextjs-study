@@ -42,12 +42,28 @@ exports[`hooks/useCountdown should render correctly 1`] = `
               <div
                 class="w-12 h-12 rounded-full"
               >
-                <img
-                  alt="髭をはやしてオレンジ色の服を着ている男性"
-                  height="48px"
-                  src="/images/1.png"
-                  width="48px"
-                />
+                <span
+                  style="box-sizing: border-box; display: inline-block; overflow: hidden; background: none; opacity: 1; border: 0px; margin: 0px; padding: 0px; position: relative; max-width: 100%;"
+                >
+                  <span
+                    style="box-sizing: border-box; display: block; background: none; opacity: 1; border: 0px; margin: 0px; padding: 0px; max-width: 100%;"
+                  >
+                    <img
+                      alt=""
+                      aria-hidden="true"
+                      src="data:image/svg+xml,%3csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20version=%271.1%27%20width=%2748%27%20height=%2748%27/%3e"
+                      style="display: block; max-width: 100%; background: none; opacity: 1; border: 0px; margin: 0px; padding: 0px;"
+                    />
+                  </span>
+                  <img
+                    alt="髭をはやしてオレンジ色の服を着ている男性"
+                    data-nimg="intrinsic"
+                    decoding="async"
+                    src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                    style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px; box-sizing: border-box; padding: 0px; margin: auto; display: block; width: 0px; height: 0px; min-width: 100%; max-width: 100%; min-height: 100%; max-height: 100%;"
+                  />
+                  <noscript />
+                </span>
               </div>
             </div>
           </button>
@@ -61,12 +77,28 @@ exports[`hooks/useCountdown should render correctly 1`] = `
               <div
                 class="w-12 h-12 rounded-full"
               >
-                <img
-                  alt="ショートヘアで赤い服を着ている女性"
-                  height="48px"
-                  src="/images/2.png"
-                  width="48px"
-                />
+                <span
+                  style="box-sizing: border-box; display: inline-block; overflow: hidden; background: none; opacity: 1; border: 0px; margin: 0px; padding: 0px; position: relative; max-width: 100%;"
+                >
+                  <span
+                    style="box-sizing: border-box; display: block; background: none; opacity: 1; border: 0px; margin: 0px; padding: 0px; max-width: 100%;"
+                  >
+                    <img
+                      alt=""
+                      aria-hidden="true"
+                      src="data:image/svg+xml,%3csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20version=%271.1%27%20width=%2748%27%20height=%2748%27/%3e"
+                      style="display: block; max-width: 100%; background: none; opacity: 1; border: 0px; margin: 0px; padding: 0px;"
+                    />
+                  </span>
+                  <img
+                    alt="ショートヘアで赤い服を着ている女性"
+                    data-nimg="intrinsic"
+                    decoding="async"
+                    src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                    style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px; box-sizing: border-box; padding: 0px; margin: auto; display: block; width: 0px; height: 0px; min-width: 100%; max-width: 100%; min-height: 100%; max-height: 100%;"
+                  />
+                  <noscript />
+                </span>
               </div>
             </div>
           </button>
@@ -80,12 +112,28 @@ exports[`hooks/useCountdown should render correctly 1`] = `
               <div
                 class="w-12 h-12 rounded-full"
               >
-                <img
-                  alt="ちょび髭を生やした赤と黒のチェックシャツの男性"
-                  height="48px"
-                  src="/images/3.png"
-                  width="48px"
-                />
+                <span
+                  style="box-sizing: border-box; display: inline-block; overflow: hidden; background: none; opacity: 1; border: 0px; margin: 0px; padding: 0px; position: relative; max-width: 100%;"
+                >
+                  <span
+                    style="box-sizing: border-box; display: block; background: none; opacity: 1; border: 0px; margin: 0px; padding: 0px; max-width: 100%;"
+                  >
+                    <img
+                      alt=""
+                      aria-hidden="true"
+                      src="data:image/svg+xml,%3csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20version=%271.1%27%20width=%2748%27%20height=%2748%27/%3e"
+                      style="display: block; max-width: 100%; background: none; opacity: 1; border: 0px; margin: 0px; padding: 0px;"
+                    />
+                  </span>
+                  <img
+                    alt="ちょび髭を生やした赤と黒のチェックシャツの男性"
+                    data-nimg="intrinsic"
+                    decoding="async"
+                    src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                    style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px; box-sizing: border-box; padding: 0px; margin: auto; display: block; width: 0px; height: 0px; min-width: 100%; max-width: 100%; min-height: 100%; max-height: 100%;"
+                  />
+                  <noscript />
+                </span>
               </div>
             </div>
           </button>
@@ -99,12 +147,28 @@ exports[`hooks/useCountdown should render correctly 1`] = `
               <div
                 class="w-12 h-12 rounded-full"
               >
-                <img
-                  alt="ミディアムヘアで緑の服を着ている女性"
-                  height="48px"
-                  src="/images/4.png"
-                  width="48px"
-                />
+                <span
+                  style="box-sizing: border-box; display: inline-block; overflow: hidden; background: none; opacity: 1; border: 0px; margin: 0px; padding: 0px; position: relative; max-width: 100%;"
+                >
+                  <span
+                    style="box-sizing: border-box; display: block; background: none; opacity: 1; border: 0px; margin: 0px; padding: 0px; max-width: 100%;"
+                  >
+                    <img
+                      alt=""
+                      aria-hidden="true"
+                      src="data:image/svg+xml,%3csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20version=%271.1%27%20width=%2748%27%20height=%2748%27/%3e"
+                      style="display: block; max-width: 100%; background: none; opacity: 1; border: 0px; margin: 0px; padding: 0px;"
+                    />
+                  </span>
+                  <img
+                    alt="ミディアムヘアで緑の服を着ている女性"
+                    data-nimg="intrinsic"
+                    decoding="async"
+                    src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                    style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px; box-sizing: border-box; padding: 0px; margin: auto; display: block; width: 0px; height: 0px; min-width: 100%; max-width: 100%; min-height: 100%; max-height: 100%;"
+                  />
+                  <noscript />
+                </span>
               </div>
             </div>
           </button>
@@ -118,12 +182,28 @@ exports[`hooks/useCountdown should render correctly 1`] = `
               <div
                 class="w-12 h-12 rounded-full"
               >
-                <img
-                  alt="フラットデザインのキツネ"
-                  height="48px"
-                  src="/images/5.png"
-                  width="48px"
-                />
+                <span
+                  style="box-sizing: border-box; display: inline-block; overflow: hidden; background: none; opacity: 1; border: 0px; margin: 0px; padding: 0px; position: relative; max-width: 100%;"
+                >
+                  <span
+                    style="box-sizing: border-box; display: block; background: none; opacity: 1; border: 0px; margin: 0px; padding: 0px; max-width: 100%;"
+                  >
+                    <img
+                      alt=""
+                      aria-hidden="true"
+                      src="data:image/svg+xml,%3csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20version=%271.1%27%20width=%2748%27%20height=%2748%27/%3e"
+                      style="display: block; max-width: 100%; background: none; opacity: 1; border: 0px; margin: 0px; padding: 0px;"
+                    />
+                  </span>
+                  <img
+                    alt="フラットデザインのキツネ"
+                    data-nimg="intrinsic"
+                    decoding="async"
+                    src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                    style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px; box-sizing: border-box; padding: 0px; margin: auto; display: block; width: 0px; height: 0px; min-width: 100%; max-width: 100%; min-height: 100%; max-height: 100%;"
+                  />
+                  <noscript />
+                </span>
               </div>
             </div>
           </button>
@@ -137,12 +217,28 @@ exports[`hooks/useCountdown should render correctly 1`] = `
               <div
                 class="w-12 h-12 rounded-full"
               >
-                <img
-                  alt="フラットデザインのペンギン"
-                  height="48px"
-                  src="/images/6.png"
-                  width="48px"
-                />
+                <span
+                  style="box-sizing: border-box; display: inline-block; overflow: hidden; background: none; opacity: 1; border: 0px; margin: 0px; padding: 0px; position: relative; max-width: 100%;"
+                >
+                  <span
+                    style="box-sizing: border-box; display: block; background: none; opacity: 1; border: 0px; margin: 0px; padding: 0px; max-width: 100%;"
+                  >
+                    <img
+                      alt=""
+                      aria-hidden="true"
+                      src="data:image/svg+xml,%3csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20version=%271.1%27%20width=%2748%27%20height=%2748%27/%3e"
+                      style="display: block; max-width: 100%; background: none; opacity: 1; border: 0px; margin: 0px; padding: 0px;"
+                    />
+                  </span>
+                  <img
+                    alt="フラットデザインのペンギン"
+                    data-nimg="intrinsic"
+                    decoding="async"
+                    src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                    style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px; box-sizing: border-box; padding: 0px; margin: auto; display: block; width: 0px; height: 0px; min-width: 100%; max-width: 100%; min-height: 100%; max-height: 100%;"
+                  />
+                  <noscript />
+                </span>
               </div>
             </div>
           </button>
@@ -156,12 +252,28 @@ exports[`hooks/useCountdown should render correctly 1`] = `
               <div
                 class="w-12 h-12 rounded-full"
               >
-                <img
-                  alt="フラットデザインのアザラシ"
-                  height="48px"
-                  src="/images/7.png"
-                  width="48px"
-                />
+                <span
+                  style="box-sizing: border-box; display: inline-block; overflow: hidden; background: none; opacity: 1; border: 0px; margin: 0px; padding: 0px; position: relative; max-width: 100%;"
+                >
+                  <span
+                    style="box-sizing: border-box; display: block; background: none; opacity: 1; border: 0px; margin: 0px; padding: 0px; max-width: 100%;"
+                  >
+                    <img
+                      alt=""
+                      aria-hidden="true"
+                      src="data:image/svg+xml,%3csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20version=%271.1%27%20width=%2748%27%20height=%2748%27/%3e"
+                      style="display: block; max-width: 100%; background: none; opacity: 1; border: 0px; margin: 0px; padding: 0px;"
+                    />
+                  </span>
+                  <img
+                    alt="フラットデザインのアザラシ"
+                    data-nimg="intrinsic"
+                    decoding="async"
+                    src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                    style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px; box-sizing: border-box; padding: 0px; margin: auto; display: block; width: 0px; height: 0px; min-width: 100%; max-width: 100%; min-height: 100%; max-height: 100%;"
+                  />
+                  <noscript />
+                </span>
               </div>
             </div>
           </button>
@@ -175,12 +287,28 @@ exports[`hooks/useCountdown should render correctly 1`] = `
               <div
                 class="w-12 h-12 rounded-full"
               >
-                <img
-                  alt="フラットデザインのタコ"
-                  height="48px"
-                  src="/images/8.png"
-                  width="48px"
-                />
+                <span
+                  style="box-sizing: border-box; display: inline-block; overflow: hidden; background: none; opacity: 1; border: 0px; margin: 0px; padding: 0px; position: relative; max-width: 100%;"
+                >
+                  <span
+                    style="box-sizing: border-box; display: block; background: none; opacity: 1; border: 0px; margin: 0px; padding: 0px; max-width: 100%;"
+                  >
+                    <img
+                      alt=""
+                      aria-hidden="true"
+                      src="data:image/svg+xml,%3csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20version=%271.1%27%20width=%2748%27%20height=%2748%27/%3e"
+                      style="display: block; max-width: 100%; background: none; opacity: 1; border: 0px; margin: 0px; padding: 0px;"
+                    />
+                  </span>
+                  <img
+                    alt="フラットデザインのタコ"
+                    data-nimg="intrinsic"
+                    decoding="async"
+                    src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                    style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px; box-sizing: border-box; padding: 0px; margin: auto; display: block; width: 0px; height: 0px; min-width: 100%; max-width: 100%; min-height: 100%; max-height: 100%;"
+                  />
+                  <noscript />
+                </span>
               </div>
             </div>
           </button>
