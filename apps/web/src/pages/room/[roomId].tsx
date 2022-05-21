@@ -1,28 +1,23 @@
-import { CompleteResult, REQ_EVENTS, RES_EVENTS } from 'models';
+import { REQ_EVENTS } from 'models';
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useContext, useEffect, useState } from 'react';
-import { toast } from 'react-toastify';
-import useSound from 'use-sound';
 
+import AlertVolumeControl from '@/components/AlertVolumeControl';
 import Button from '@/components/Button/Button';
 import CountdownTimer from '@/components/CountdownTimer/CountdownTimer';
 import EmojiPicker from '@/components/EmojiPicker/EmojiPicker';
 import Participants from '@/components/Participants/Participants';
-import VolumeControl from '@/components/VolumeControl/VolumeControl';
 import { SocketContext } from '@/context/socket';
-
-import alertMp3 from '../../../public/sounds/alert.mp3';
+import useCountdown from '@/hooks/useCountdown';
+import useRoomEventHandler from '@/hooks/useRoomEventHandler';
 
 const Room: NextPage = () => {
   const socket = useContext(SocketContext);
   const router = useRouter();
-  const [isRestTime, setIsRestTime] = useState(false);
+  const { isRestTime } = useCountdown();
   const [volume, setVolume] = useState(1);
-  const [play] = useSound(alertMp3, {
-    volume,
-  });
 
   /**
    * 退出ボタンが押された時の処理
@@ -33,6 +28,8 @@ const Room: NextPage = () => {
     router.push('/');
   };
 
+  useRoomEventHandler();
+
   useEffect(() => {
     if (!socket.connected) {
       router.push('/');
@@ -41,34 +38,12 @@ const Room: NextPage = () => {
     // 部屋情報を取得
     socket.emit(REQ_EVENTS.GET_ROOM_INFO, router.query.roomId);
 
-    // 部屋情報を受信した時、現在休憩時間かどうかを取得
-
-    // セッションが完了した時、スコアを取得する
-    // 取得したスコアを現在のスコアに加算してローカルストレージに保存する
-    socket.on(RES_EVENTS.COMPLETE, ({ score, isRestTime }: CompleteResult) => {
-      const prevScore = Number(localStorage.getItem('score') || 0);
-      localStorage.setItem('score', String(prevScore + score));
-
-      setIsRestTime(isRestTime);
-      if (isRestTime) {
-        toast.success('セッションを完了しました🎉');
-      } else {
-        toast.info('休憩できましたか？引き続き頑張りましょう🙌');
-      }
-      play();
-    });
-
     router.beforePopState(() => {
       // ルートに戻った時、サーバーに退出要求を送信
       socket.emit(REQ_EVENTS.QUIT, router.query.roomId as string);
       return true;
     });
-
-    return () => {
-      // socket.off(RES_EVENTS.ROOM_INFO);
-      socket.off(RES_EVENTS.COMPLETE);
-    };
-  }, [socket, router, play]);
+  }, [socket, router]);
 
   return (
     <div>
@@ -94,7 +69,7 @@ const Room: NextPage = () => {
           </div>
           <div className="mt-8 p-2 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4  gap-4">
             <EmojiPicker />
-            <VolumeControl volume={volume} onVolumeChange={(volume) => setVolume(volume)} />
+            <AlertVolumeControl />
           </div>
         </div>
       </main>
