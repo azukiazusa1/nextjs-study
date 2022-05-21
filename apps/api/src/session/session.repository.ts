@@ -7,7 +7,7 @@ import { JoinRoomDto } from './session.dto';
 
 @Injectable()
 export class SessionRepository {
-  constructor(@InjectRedis() private readonly client: Redis) {}
+  constructor(@InjectRedis() private readonly client: Redis) { }
 
   /**
    * 参加者をセットする
@@ -127,7 +127,6 @@ export class SessionRepository {
    */
   async createRoom(roomId: string): Promise<void> {
     await this.client.hset(`room:${roomId}`, 'createdAt', Date.now());
-    console.log(await this.client.sadd('availableRooms', roomId));
     return;
   }
 

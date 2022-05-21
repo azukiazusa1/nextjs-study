@@ -1,6 +1,6 @@
 import { renderHook, waitFor } from '@testing-library/react';
 import { createServer } from 'http';
-import { REQ_EVENTS, RES_EVENTS } from 'models';
+import { REQ_EVENTS } from 'models';
 import React from 'react';
 import { act } from 'react-dom/test-utils';
 import { Server, Socket as ServerSocket } from 'socket.io';
@@ -38,27 +38,27 @@ describe('hooks/useMessages', () => {
     clientSocket.close();
   });
 
-  test('メッセージが取得できること', async () => {
+  test('メッセージが取得できること', () => {
     const { result } = renderHook(() => useMessages(), { wrapper });
-    await act(async () => {
-      serverSocket.emit(RES_EVENTS.MESSAGE, {
+    act(() => {
+      result.current.addMessage({
         participantId: '1',
         message: 'test',
       });
     });
-    await waitFor(() => expect(result.current.messages.get('1')).toBe('test'));
+    expect(result.current.messages.get('1')).toBe('test');
   });
 
   test('取得したメッセージは3秒後に削除されること', async () => {
     jest.useFakeTimers();
     const { result } = renderHook(() => useMessages(), { wrapper });
-    await act(async () => {
-      serverSocket.emit(RES_EVENTS.MESSAGE, {
+    act(() => {
+      result.current.addMessage({
         participantId: '1',
         message: 'test',
       });
     });
-    await waitFor(() => expect(result.current.messages.get('1')).toBe('test'));
+    expect(result.current.messages.get('1')).toBe('test');
 
     await act(() => {
       {

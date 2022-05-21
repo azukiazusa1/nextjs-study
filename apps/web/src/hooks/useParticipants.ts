@@ -1,13 +1,28 @@
-import { CompleteResult, Participant, RES_EVENTS, RoomInfo } from 'models';
-import { useContext, useEffect, useState } from 'react';
-
-import { SocketContext } from '@/context/socket';
+import { atom, useAtom } from 'jotai';
+import { Participant } from 'models';
+import { useCallback } from 'react';
 
 type UseParticipantsReturn = {
   /**
    * 参加者一覧
    */
   participants: Participant[];
+  /**
+   * 参加者一覧を更新する
+   */
+  setParticipants: (participants: Participant[]) => void;
+  /**
+   * 参加者を追加する
+   */
+  addParticipant: (participant: Participant) => void;
+  /**
+   * 参加者を削除する
+   */
+  removeParticipant: (id: string) => void;
+  /**
+   * 全ての参加者のスコアを更新する
+   */
+  updateParticipantsScore: (score: number) => void;
 };
 
 /**
@@ -15,50 +30,36 @@ type UseParticipantsReturn = {
  */
 type UseParticipants = () => UseParticipantsReturn;
 
+const participantsAtom = atom<Participant[]>([]);
+
 const useParticipants: UseParticipants = () => {
-  const socket = useContext(SocketContext);
-  const [participants, setParticipants] = useState<Participant[]>([]);
+  const [participants, setParticipants] = useAtom(participantsAtom);
 
-  useEffect(() => {
-    console.log(RES_EVENTS.ROOM_INFO)
-    socket.on(RES_EVENTS.ROOM_INFO, ({ participants }: RoomInfo) => {
-      console.log('ROOM_INFO:', participants);
-      setParticipants(participants);
-    });
+  const addParticipant = useCallback((participant: Participant) => {
+    setParticipants((prev) => [...prev, participant]);
+  }, [setParticipants]);
 
-    // セッションが完了した時、参加者一覧にスコアを加算する
-    socket.on(RES_EVENTS.COMPLETE, ({ score }: CompleteResult) => {
-      if (score > 0) {
-        setParticipants((prev) =>
-          prev.map((p) => {
-            return {
-              ...p,
-              score: p.score + score,
-            };
-          }),
-        );
-      }
-    });
+  const removeParticipant = useCallback((id: string) => {
+    setParticipants((prev) => prev.filter((p) => p.id !== id));
+  }, [setParticipants]);
 
-    socket.on(RES_EVENTS.PARTICIPATED, ({ participant }: { participant: Participant }) => {
-      console.log('PARTICIPATED', participant);
-      setParticipants((prev) => [...prev, participant]);
-    });
-
-    socket.on(RES_EVENTS.QUITED, ({ id }: { id: string }) => {
-      setParticipants((prev) => prev.filter((p) => p.id !== id));
-    });
-
-    return () => {
-      socket.off(RES_EVENTS.ROOM_INFO);
-      socket.off(RES_EVENTS.COMPLETE);
-      socket.off(RES_EVENTS.PARTICIPATED);
-      socket.off(RES_EVENTS.QUITED);
-    };
-  }, [socket]);
+  const updateParticipantsScore = useCallback((score: number) => {
+    setParticipants((prev) =>
+      prev.map((p) => {
+        return {
+          ...p,
+          score: p.score + score,
+        }
+      }),
+    );
+  }, [setParticipants]);
 
   return {
     participants,
+    setParticipants,
+    addParticipant,
+    removeParticipant,
+    updateParticipantsScore,
   };
 };
 
