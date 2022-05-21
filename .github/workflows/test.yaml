@@ -1,9 +1,9 @@
-name: "CI"
+name: 'CI'
 on:
   pull_request:
     types: [opened, synchronize]
     paths:
-      - "apps/web/**"
+      - 'apps/web/**'
 jobs:
   build:
     name: Build and Test
@@ -11,7 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - name: npm install
-        run: npm install --legacy-peer-deps
+        run: npm install
       - name: Build
         run: npm run build
       - name: test

@@ -14,9 +14,11 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: install packages
-        run: npm install --legacy-peer-deps
+        run: npm install
+      - name: build packages
+        run: npm run build -w packages/models
       - name: build storybook
-        run: cd apps/web && npm run build-storybook
+        run: npm run build-storybook -w apps/web
       - name: deploy storybook
         uses: JamesIves/github-pages-deploy-action@4.1.0
         with:

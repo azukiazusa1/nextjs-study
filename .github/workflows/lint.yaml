@@ -9,7 +9,7 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - name: npm install
-        run: npm install --legacy-peer-deps
+        run: npm install
       - name: eslint
         run: npm rum lint
       - name: format

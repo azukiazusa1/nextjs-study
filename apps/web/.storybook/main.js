@@ -29,4 +29,15 @@ module.exports = {
     };
   },
   framework: '@storybook/react',
+  storyStoreV7: true,
+  core: {
+    builder: {
+      name: 'webpack5',
+      options: {
+        lazyCompilation: true,
+        fsCache: true,
+      },
+    },
+  },
+  staticDirs: ['../public'],
 };
