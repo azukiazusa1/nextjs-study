@@ -1,74 +1,101 @@
-import { renderHook, waitFor } from '@testing-library/react';
-import { createServer } from 'http';
-import { RES_EVENTS } from 'models';
-import React from 'react';
+import { renderHook } from '@testing-library/react';
 import { act } from 'react-dom/test-utils';
-import { Server, Socket as ServerSocket } from 'socket.io';
-import { io as Client, Socket as ClientSocket } from 'socket.io-client';
-
-import { SocketContext } from '@/context/socket';
 
 import useCountdown from './useCountdown';
+jest.useFakeTimers();
 
 describe('hooks/useCountdown', () => {
-  let io: Server;
-  let clientSocket: ClientSocket;
-  let serverSocket: ServerSocket;
-  let wrapper: any;
-
-  beforeAll((done) => {
-    const httpServer = createServer();
-    io = new Server(httpServer);
-    httpServer.listen(() => {
-      const port = (httpServer.address() as any).port;
-      clientSocket = Client(`http://localhost:${port}`);
-      io.on('connection', (socket) => {
-        serverSocket = socket;
-        done();
-      });
+  test(`経過時間が0秒の時
+    作業時間である
+    minutes: 25
+    seconds: 0
+    remainngPercentage: 100
+  `, () => {
+    const { result } = renderHook(() => useCountdown());
+    act(() => {
+      result.current.startTimer(0, jest.fn());
     });
-    // eslint-disable-next-line react/display-name
-    wrapper = ({ children }: { children: React.ReactNode }) => (
-      <SocketContext.Provider value={clientSocket}>{children}</SocketContext.Provider>
-    );
+    expect(result.current.minutes).toBe(25);
+    expect(result.current.seconds).toBe(0);
+    expect(result.current.remainngPercentage).toBe(100);
+    expect(result.current.isRestTime).toBe(false);
   });
 
-  afterAll(() => {
-    io.close();
-    clientSocket.close();
+  test(`経過時間が25分20秒の時
+    休憩時間である
+    minutes: 4
+    seconds: 40
+    remainngPercentage: 93
+  `, () => {
+    const { result } = renderHook(() => useCountdown());
+    act(() => {
+      result.current.startTimer(25 * 60 * 1000 + 20 * 1000, jest.fn());
+    });
+    expect(result.current.minutes).toBe(4);
+    expect(result.current.seconds).toBe(40);
+    expect(Math.floor(result.current.remainngPercentage)).toBe(93);
+    expect(result.current.isRestTime).toBe(true);
   });
 
-  describe('hooks/useCountdown', () => {
-    test('tick イベントにより取得した経過時間を返す', async () => {
-      const { result } = renderHook(() => useCountdown(), { wrapper });
-      await act(async () => {
-        serverSocket.emit(RES_EVENTS.TICK, {
-          time: 1088000,
-          remainngPercentage: 95.888,
-        });
-      });
-
-      await waitFor(() => {
-        expect(result.current.milliseconds).toBe(1088000);
-        expect(result.current.minutes).toBe(18);
-        expect(result.current.seconds).toBe(8);
-        expect(result.current.remainngPercentage).toBe(96);
-      });
-
-      await act(async () => {
-        serverSocket.emit(RES_EVENTS.TICK, {
-          time: 12000,
-          remainngPercentage: 8,
-        });
-        await new Promise((resolve) => setTimeout(resolve, 0));
-      });
-
-      await waitFor(() => {
-        expect(result.current.milliseconds).toBe(12000);
-        expect(result.current.minutes).toBe(0);
-        expect(result.current.seconds).toBe(12);
-        expect(result.current.remainngPercentage).toBe(8);
-      });
+  test(`経過時間が1時間18分10秒の時
+    作業時間である
+    minutes: 6
+    seconds: 50
+    remainngPercentage: 27
+  `, () => {
+    const { result } = renderHook(() => useCountdown());
+    act(() => {
+      result.current.startTimer(1 * 60 * 60 * 1000 + 18 * 60 * 1000 + 10 * 1000, jest.fn());
     });
+    expect(result.current.minutes).toBe(6);
+    expect(result.current.seconds).toBe(50);
+    expect(Math.floor(result.current.remainngPercentage)).toBe(27);
+    expect(result.current.isRestTime).toBe(false);
+  });
+
+  test('時間が経過すると、経過時間が更新されること', () => {
+    const { result } = renderHook(() => useCountdown());
+    act(() => {
+      result.current.startTimer(0, jest.fn());
+    });
+
+    act(() => {
+      jest.advanceTimersByTime(1000);
+    });
+
+    expect(result.current.minutes).toBe(24);
+    expect(result.current.seconds).toBe(59);
+    expect(Math.floor(result.current.remainngPercentage)).toBe(99);
+    expect(result.current.isRestTime).toBe(false);
+  });
+
+  test('時間が経過したことにより、作業時間 → 休憩時間となった時コールバック関数が呼ばれる', () => {
+    const callback = jest.fn();
+    const { result } = renderHook(() => useCountdown());
+    act(() => {
+      result.current.startTimer(0, callback);
+    });
+
+    act(() => {
+      jest.advanceTimersByTime(25 * 60 * 1000);
+    });
+
+    expect(callback).toHaveBeenCalledWith(false);
+    expect(result.current.isRestTime).toBe(true);
+  });
+
+  test('時間が経過したことにより、休憩時間 → 作業時間となった時コールバック関数が呼ばれる', () => {
+    const callback = jest.fn();
+    const { result } = renderHook(() => useCountdown());
+    act(() => {
+      result.current.startTimer(25 * 60 * 1000 + 20 * 1000, callback);
+    });
+
+    act(() => {
+      jest.advanceTimersByTime(5 * 60 * 1000);
+    });
+
+    expect(callback).toHaveBeenCalledWith(true);
+    expect(result.current.isRestTime).toBe(false);
   });
 });
