@@ -36,7 +36,7 @@ export class SessionGateway implements OnGatewayConnection, OnGatewayDisconnect,
    */
   private rooms: Map<string, RoomData> = new Map();
 
-  constructor(private readonly sessionService: SessionService) { }
+  constructor(private readonly sessionService: SessionService) {}
 
   handleConnection(client: Socket, ...args: any[]) {
     const socketId = client.id;

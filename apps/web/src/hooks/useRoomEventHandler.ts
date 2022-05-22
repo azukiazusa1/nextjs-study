@@ -9,15 +9,30 @@ import { calcScore } from "@/lib/session"
 import useAlert from "./useAlert"
 import useCountdown from "./useCountdown"
 import useMessages from "./useMessages"
-
 /**
  * Web Socket によるイベントを受け取るためのハンドラを管理する
  */
 const useRoomEventHandler = () => {
   const socket = useContext(SocketContext)
   const timerIdRef = useRef<NodeJS.Timer | undefined>(undefined)
-  const { setParticipants, addParticipant, removeParticipant, updateParticipantsScore } = useParticipants()
+  const { participants, setParticipants, addParticipant, removeParticipant, updateParticipantsScore } = useParticipants()
   const { play } = useAlert()
+  const callback = useRef((isRestTime: boolean) => {
+    const prevScore = Number(localStorage.getItem('score') || 0);
+    const score = calcScore(participants, isRestTime);
+
+    // セッションが完了した時、参加者一覧にスコアを加算し、
+    // スコアをローカルストレージに保存する
+    localStorage.setItem('score', String(prevScore + score));
+    updateParticipantsScore(score);
+
+    if (isRestTime) {
+      toast.info('休憩できましたか？引き続き頑張りましょう🙌');
+    } else {
+      toast.success('セッションを完了しました🎉');
+    }
+    play();
+  })
   const { addMessage } = useMessages()
   const { startTimer } = useCountdown()
 
@@ -25,22 +40,7 @@ const useRoomEventHandler = () => {
     socket.on(RES_EVENTS.ROOM_INFO, ({ participants, elapsedTime }: RoomInfo) => {
       setParticipants(participants);
       if (!timerIdRef.current) {
-        timerIdRef.current = startTimer(elapsedTime, (isRestTime) => {
-          const prevScore = Number(localStorage.getItem('score') || 0);
-          const score = calcScore(participants, isRestTime);
-
-          // セッションが完了した時、参加者一覧にスコアを加算し、
-          // スコアをローカルストレージに保存する
-          localStorage.setItem('score', String(prevScore + score));
-          updateParticipantsScore(score);
-
-          if (isRestTime) {
-            toast.success('セッションを完了しました🎉');
-          } else {
-            toast.info('休憩できましたか？引き続き頑張りましょう🙌');
-          }
-          play();
-        })
+        timerIdRef.current = startTimer(elapsedTime, callback.current)
       }
     });
 
@@ -67,7 +67,7 @@ const useRoomEventHandler = () => {
         timerIdRef.current = undefined;
       }
     }
-  }, [socket, startTimer, setParticipants, addParticipant, removeParticipant, updateParticipantsScore, addMessage, play]);
+  }, []);
 }
 
 export default useRoomEventHandler;

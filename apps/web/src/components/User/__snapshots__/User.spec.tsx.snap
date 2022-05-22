@@ -49,13 +49,9 @@ exports[`components/User Renders Default story 1`] = `
         >
           @johndoe
         </div>
-        <div
-          class="countdown"
-        >
+        <div>
           🍅 ×
-          <span
-            style="--value: 12;"
-          >
+          <span>
             12
           </span>
         </div>
@@ -114,13 +110,9 @@ exports[`components/User Renders hasMessage story 1`] = `
         >
           @johndoe
         </div>
-        <div
-          class="countdown"
-        >
+        <div>
           🍅 ×
-          <span
-            style="--value: 12;"
-          >
+          <span>
             12
           </span>
         </div>
@@ -179,13 +171,9 @@ exports[`components/User Renders isOffline story 1`] = `
         >
           @johndoe
         </div>
-        <div
-          class="countdown"
-        >
+        <div>
           🍅 ×
-          <span
-            style="--value: 12;"
-          >
+          <span>
             12
           </span>
         </div>
