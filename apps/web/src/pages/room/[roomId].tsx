@@ -2,7 +2,7 @@ import { REQ_EVENTS } from 'models';
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect } from 'react';
 
 import AlertVolumeControl from '@/components/AlertVolumeControl';
 import Button from '@/components/Button/Button';
@@ -17,7 +17,6 @@ const Room: NextPage = () => {
   const socket = useContext(SocketContext);
   const router = useRouter();
   const { isRestTime } = useCountdown();
-  const [volume, setVolume] = useState(1);
 
   /**
    * 退出ボタンが押された時の処理

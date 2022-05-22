@@ -53,6 +53,7 @@ const isRestTimeAtom = atom(false);
 const useCountdown: UseCountdown = () => {
   const startTimeRef = useRef(Date.now())
   const timeRef = useRef(WORK_TIME);
+  const isRestTimeRef = useRef(false);
   const [milliseconds, setMilliseconds] = useAtom(millisecondsAtom);
   const [remainngPercentage, setRemainngPercentage] = useAtom(remainngPercentageAtom);
   const [isRestTime, setIsRestTime] = useAtom(isRestTimeAtom);
@@ -62,24 +63,26 @@ const useCountdown: UseCountdown = () => {
 
 
   const startTimer = useCallback((elapsedTime: number, onComplete: (isRestTime: boolean) => void) => {
-    const { sessionElapsedTime, sessionRemainingTime, isRestTime } = calcSessionTime(elapsedTime);
+    const { sessionElapsedTime, sessionRemainingTime, isRestTime: _isRestTime } = calcSessionTime(elapsedTime);
+    isRestTimeRef.current = _isRestTime
     startTimeRef.current = startTimeRef.current - sessionElapsedTime;
-    timeRef.current = isRestTime ? REST_TIME : WORK_TIME
-    setIsRestTime(isRestTime);
+    timeRef.current = isRestTimeRef.current ? REST_TIME : WORK_TIME
+    setIsRestTime(isRestTimeRef.current);
 
     setMilliseconds(sessionRemainingTime);
     setRemainngPercentage(calcRemainingPercentage(timeRef.current, sessionElapsedTime));
-
     return setInterval(() => {
       const now = Date.now();
       const diff = now - startTimeRef.current;
-      const milliseconds = timeRef.current - diff;
+      const newMilliseconds = timeRef.current - diff;
       setRemainngPercentage(calcRemainingPercentage(timeRef.current, diff));
-      setMilliseconds(milliseconds);
-      if (milliseconds <= 0) {
-        onComplete(isRestTime);
-        setIsRestTime((prev) => !prev);
-        timeRef.current = isRestTime ? REST_TIME : WORK_TIME;
+      setMilliseconds(newMilliseconds);
+      if (newMilliseconds <= 0) {
+        onComplete(isRestTimeRef.current);
+        isRestTimeRef.current = !isRestTimeRef.current;
+        setIsRestTime(isRestTimeRef.current);
+        startTimeRef.current = Date.now();
+        timeRef.current = isRestTimeRef.current ? REST_TIME : WORK_TIME;
       }
     }, 1000);
   }, []);

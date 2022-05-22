@@ -26,8 +26,8 @@ const User: React.FC<Props> = ({
       </div>
       <div className="flex flex-col ml-4 space-y-2">
         <div className="truncate">{username}</div>
-        <div className="countdown">
-          🍅 ×<span style={{ '--value': score } as React.CSSProperties}>{score}</span>
+        <div>
+          🍅 ×<span>{score}</span>
         </div>
       </div>
     </div>
