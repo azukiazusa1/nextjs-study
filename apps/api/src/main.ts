@@ -10,6 +10,7 @@ async function bootstrap() {
   app.useWebSocketAdapter(redisIoAdapter);
 
   app.enableCors();
-  await app.listen(3333);
+  const port = Number(process.env.PORT) || 3333;
+  await app.listen(port, '0.0.0.0');
 }
 bootstrap();

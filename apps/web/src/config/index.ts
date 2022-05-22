@@ -3,7 +3,7 @@ type Config = {
 };
 
 const config: Config = {
-  SOCKET_URL: process.env.SOCKET_URL || 'http://localhost:3333',
+  SOCKET_URL: process.env.NEXT_PUBLIC_SOCKET_URL || 'http://localhost:3333',
 };
 
 export default config;

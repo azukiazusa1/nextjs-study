@@ -22,7 +22,7 @@ import {
 } from 'models';
 import { SessionService } from './session.service';
 
-@WebSocketGateway({ namespace: '/session', cors: true })
+@WebSocketGateway({ namespace: '/session', cors: true, transports: ['websocket'] })
 export class SessionGateway implements OnGatewayConnection, OnGatewayDisconnect, OnGatewayInit {
   private logger: Logger = new Logger('SessionGateway');
 
@@ -36,7 +36,7 @@ export class SessionGateway implements OnGatewayConnection, OnGatewayDisconnect,
    */
   private rooms: Map<string, RoomData> = new Map();
 
-  constructor(private readonly sessionService: SessionService) {}
+  constructor(private readonly sessionService: SessionService) { }
 
   handleConnection(client: Socket, ...args: any[]) {
     const socketId = client.id;
