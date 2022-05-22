@@ -6,6 +6,8 @@
 
 ポモドーロ・セッションは最大4人でランダムに集まり、ポモドーロ・テクニックをみんなで実践するサービスです。
 
+https://pomodoro-session-gqqr1lams-azukiazusa.vercel.app/
+
 
 ## プロジェクトの構成
 
