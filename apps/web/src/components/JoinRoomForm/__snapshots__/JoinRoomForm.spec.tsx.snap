@@ -317,7 +317,7 @@ exports[`hooks/useCountdown should render correctly 1`] = `
           class="form-control mt-6"
         >
           <button
-            class="btn btn-primary"
+            class="btn btn-primary false"
           >
             JOIN👏
           </button>

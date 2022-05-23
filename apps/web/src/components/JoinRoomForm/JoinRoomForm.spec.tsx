@@ -108,4 +108,15 @@ describe('hooks/useCountdown', () => {
       score: 20,
     });
   });
+
+  test('ボタンをクリックした時、loading が表示される', async () => {
+    render(<JoinRoomForm />, {
+      wrapper,
+    });
+
+    await userEvent.type(screen.getByLabelText('名前'), 'test');
+    await userEvent.click(screen.getByRole('button', { name: 'JOIN👏' }));
+
+    expect(screen.getByRole('alert')).toHaveTextContent('loading');
+  });
 });

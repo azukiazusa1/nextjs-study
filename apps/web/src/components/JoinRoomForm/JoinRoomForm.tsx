@@ -1,4 +1,4 @@
-import { JoinRoomResponse,REQ_EVENTS, RES_EVENTS } from 'models';
+import { JoinRoomResponse, REQ_EVENTS, RES_EVENTS } from 'models';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { useContext, useEffect, useRef, useState } from 'react';
@@ -24,6 +24,7 @@ const JoinRoomForm = () => {
   const [defaultUsername, setDefaultUsername] = useState('');
   const [avatar, setAvatar] = useState('1');
   const [hasError, setHasError] = useState(false);
+  const [loading, setLoading] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const selected = 'ring w-12 h-12 rounded-full ring-main';
@@ -35,6 +36,7 @@ const JoinRoomForm = () => {
       setHasError(true);
       return;
     }
+    setLoading(true);
     setHasError(false);
 
     const score = Number(localStorage.getItem('score') || 0);
@@ -78,7 +80,7 @@ const JoinRoomForm = () => {
               className={`input input-bordered ${hasError ? 'border-red-500' : ''}`}
             />
             {hasError && (
-              <p role="alert" className="font-medium text-red-500 text-xs mt-2">
+              <p role="alert" className="font-medium text-red-500 text-xs mt-2" aria-live="polite">
                 名前を入力してください
               </p>
             )}
@@ -98,7 +100,15 @@ const JoinRoomForm = () => {
               ))}
           </div>
           <div className="form-control mt-6">
-            <button className="btn btn-primary">JOIN👏</button>
+            <button className={`btn btn-primary ${loading && 'loading'}`}>
+              {loading ? (
+                <span className="invisible" role="alert" aria-live="polite">
+                  loading
+                </span>
+              ) : (
+                'JOIN👏'
+              )}
+            </button>
           </div>
         </form>
       </div>
