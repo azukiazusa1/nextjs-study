@@ -7,7 +7,7 @@ type Config = {
 const config: Config = {
   SOCKET_URL: process.env.NEXT_PUBLIC_SOCKET_URL || 'http://localhost:3333',
   PUBLIC_GOOGLE_ANALYTICS_ID: process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID || '',
-  SITE_URL: process.env.VERCEL_URL || 'http://localhost:3000',
+  SITE_URL: process.env.NEXT_PUBLIC_VERCEL_URL ? 'https://' + process.env.NEXT_PUBLIC_VERCEL_URL : 'http://localhost:3000',
 };
 
 export default config;

@@ -16,7 +16,7 @@ const SEO: React.FC = () => {
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
       <meta property="og:url" content={config.SITE_URL} />
-      <meta property="og:image" content="/logo_transparent.png" />
+      <meta property="og:image" content={config.SITE_URL + '/images/logo_transparent.png'} />
       <meta property="og:image:width" content={imageHeight} />
       <meta property="og:image:height" content={imageWidth} />
       <meta property="og:site_name" content={title} />
