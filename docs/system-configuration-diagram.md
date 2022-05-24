@@ -1,6 +1,6 @@
 # システム構成図
 
-![websocket-redis-architecture](websocket-redis-architecture.png)
+![websocket-redis-architecture](./images/websocket-redis-architecture.png)
 
 ## 参考
 
