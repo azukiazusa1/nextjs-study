@@ -1,28 +1,27 @@
 # ポモドーロ・セッション
 
 <p align="center">
-  <img src="./docs/logo_transparent.png" alt="Pomodoro Session" width="400" height="400">
+  <img src="./docs/images/logo_transparent.png" alt="Pomodoro Session" width="400" height="400">
 </p>
 
-ポモドーロ・セッションは最大4人でランダムに集まり、ポモドーロ・テクニックをみんなで実践するサービスです。
+ポモドーロ・セッションは最大 4 人でランダムに集まり、ポモドーロ・テクニックをみんなで実践するサービスです。
 
 https://pomodoro-session.vercel.app/
-
 
 ## プロジェクトの構成
 
 このプロジェクトは [Turborepo](https://turborepo.org/) + [npm workspaces](https://docs.npmjs.com/cli/v8/using-npm/workspaces/) によるモノレポ構成となっています。
 
-|  | 概要 |
-----|---- 
-| `docs` | プロジェクトに関するドキュメントを配置する |
-| `apps` |  |
-| ├ `api` | バックエンドのアプリケーション |
-| └ `web` | フロントエンドのアプリケーション |
-| `packages` |  |
-| ├ `models` | フロントエンドとバックエンドで共通する型定義 |
-| ├ `eslint-config-custom` | `eslint` の設定ファイル |
-| └ `tsconfig` | `tsconfig.json` |
+|                          | 概要                                         |
+| ------------------------ | -------------------------------------------- |
+| `docs`                   | プロジェクトに関するドキュメントを配置する   |
+| `apps`                   |                                              |
+| ├ `api`                  | バックエンドのアプリケーション               |
+| └ `web`                  | フロントエンドのアプリケーション             |
+| `packages`               |                                              |
+| ├ `models`               | フロントエンドとバックエンドで共通する型定義 |
+| ├ `eslint-config-custom` | `eslint` の設定ファイル                      |
+| └ `tsconfig`             | `tsconfig.json`                              |
 
 ## 開発環境の構築
 
@@ -30,11 +29,10 @@ https://pomodoro-session.vercel.app/
 
 このプロジェクトは [npm workspaces](https://docs.npmjs.com/cli/v8/using-npm/workspaces/) を使用しているため、以下の環境が必要です
 
-
-|  | バージョン |
-----|---- 
-| Node.js | 16.x |
-| npm | 8.x |
+|         | バージョン |
+| ------- | ---------- |
+| Node.js | 16.x       |
+| npm     | 8.x        |
 
 Node.js のバージョン管理には [Volta](https://volta.sh/) を使用することを推奨します。このプロジェクトでは Node.js のバージョンが Volta によりピン留めされているので、このプロジェクトに移動すると自動で適切なバージョンの Node.js をインストールします。
 
